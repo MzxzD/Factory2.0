@@ -10,7 +10,10 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
-class DataViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
+class DataViewController: UIViewController  {
+    
+    // MARK: variables
+    var detailPresenter: NewsDetailPresenter!
     
     var photoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -22,20 +25,21 @@ class DataViewController: UIViewController, UITextFieldDelegate, UINavigationCon
     var headlineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "Title 1-Bold", size: 50)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 3
         return label
     }()
     
     var storyText: UITextView = {
-        let tekst = UITextView()
-        tekst.translatesAutoresizingMaskIntoConstraints = false
-        tekst.isEditable = false
-        tekst.isScrollEnabled = true
-        return tekst
+        let text = UITextView()
+        text.translatesAutoresizingMaskIntoConstraints = false
+        text.font = UIFont(name: "Plain", size: 30)
+        text.isEditable = false
+        text.isScrollEnabled = true
+        return text
     }()
     
-    
-    var newsToDisplay: NewsViewData!
-    // Prikazati sa preznetera
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +51,7 @@ class DataViewController: UIViewController, UITextFieldDelegate, UINavigationCon
     func addSubViews() {
         
         view.addSubview(photoImageView)
-        Alamofire.request(URL (string: newsToDisplay!.imageUrl)!).responseImage
+        Alamofire.request(URL (string: detailPresenter.newsDetailData.urlToImage)!).responseImage
             {
                 response in
                 if let image = response.result.value
@@ -60,14 +64,14 @@ class DataViewController: UIViewController, UITextFieldDelegate, UINavigationCon
         photoImageView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         photoImageView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         photoImageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        photoImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        photoImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         
         view.addSubview(headlineLabel)
         headlineLabel.text = nil
-        headlineLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+        headlineLabel.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         headlineLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
-        headlineLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 308).isActive = true
-        headlineLabel.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 360) .isActive = true
+        headlineLabel.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 8).isActive = true
+        headlineLabel.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 280) .isActive = true
         
         
         view.addSubview(storyText)
@@ -77,14 +81,14 @@ class DataViewController: UIViewController, UITextFieldDelegate, UINavigationCon
         storyText.topAnchor.constraint(equalTo: headlineLabel.bottomAnchor, constant: 8).isActive = true
         storyText.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        navigationItem.title = newsToDisplay?.headline
-        headlineLabel.text = newsToDisplay?.headline
-        storyText.text = newsToDisplay?.story
+        navigationItem.title = detailPresenter.newsDetailData?.title
+        headlineLabel.text = detailPresenter.newsDetailData?.title
+        storyText.text = detailPresenter.newsDetailData?.description
         
         
         
     }
     
-    
+ 
 }
 

@@ -14,6 +14,8 @@ class PreviewDataTableViewCell: UITableViewCell {
     var headlineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 3
         return label
     }()
 
@@ -49,7 +51,7 @@ class PreviewDataTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         self.contentView.addSubview(photoImageView)
         photoImageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
-        photoImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        photoImageView.widthAnchor.constraint(equalToConstant: 130).isActive = true
         photoImageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         self.contentView.addSubview(headlineLabel)

@@ -16,10 +16,7 @@ class PreviewDataTableViewController: UITableViewController {
     let cellIdentifier = "PreviewDataTableViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     fileprivate let newsPresenter = NewsPresenter(newsService: NewsService())
-    fileprivate var newsToDisplay = [NewsViewData]()
     
-    
-    //  Maknuti polje i pristupati preko prezentera
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +28,8 @@ class PreviewDataTableViewController: UITableViewController {
     }
  
     override func viewDidAppear(_ animated: Bool) {
-        newsPresenter.checkTimer(time: Date())
-        // prepraviti sa drugom funkcijom
+        newsPresenter.checkTimer()
+    
     }
 
     // MARK: - Table view data source
@@ -41,7 +38,7 @@ class PreviewDataTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsToDisplay.count
+        return newsPresenter.newsArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -51,15 +48,14 @@ class PreviewDataTableViewController: UITableViewController {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PreviewDataTableViewCell else
         {
-            //fatalError("The dequeued cell is not an instance of MealTableViewCell.")
-            errorOccured(value: "The dequeued cell is not an instance of MealTableViewCell.")
+            errorOccured(value: "The dequeued cell is not an instance of PreviewDataTableViewCell.")
             return UITableViewCell()
            
         }
-        let newsViewData = newsToDisplay[indexPath.row]
+        let newsViewData = newsPresenter.newsArray[indexPath.row]
         
-        cell.headlineLabel.text = newsViewData.headline
-        Alamofire.request(URL (string: newsViewData.imageUrl)!).responseImage
+        cell.headlineLabel.text = newsViewData?.title
+        Alamofire.request(URL (string: (newsViewData?.urlToImage)!)!).responseImage
             {
                 response in
                     if let image = response.result.value
@@ -76,8 +72,10 @@ class PreviewDataTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newsDetailViewController = DataViewController()
-        let selectedNews = newsToDisplay[indexPath.row]
-        newsDetailViewController.newsToDisplay = selectedNews
+        let newsDetailPresenter = NewsDetailPresenter()
+        let selectedNews = newsPresenter.newsArray[indexPath.row]
+        newsDetailPresenter.newsDetailData = selectedNews
+        newsDetailViewController.detailPresenter = newsDetailPresenter
         navigationController?.pushViewController(newsDetailViewController, animated: true)
         
     }
@@ -97,8 +95,7 @@ extension PreviewDataTableViewController: NewsView {
         loadingIndicator.stopAnimating()
     }
     
-    func setNews(_ news: [NewsViewData]) {
-        newsToDisplay = news
+    func setNews() {
         tableView.isHidden = false
         tableView.reloadData()
     }
