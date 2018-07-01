@@ -15,6 +15,7 @@ class PreviewDataTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
+        label.font = UIFont(name: "Verdana", size: 17)
         label.numberOfLines = 3
         return label
     }()

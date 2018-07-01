@@ -25,7 +25,7 @@ class DataViewController: UIViewController  {
     var headlineLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Title 1-Bold", size: 50)
+        label.font = UIFont(name: "AvenirNext-Bold", size: 23)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 3
         return label
@@ -34,7 +34,8 @@ class DataViewController: UIViewController  {
     var storyText: UITextView = {
         let text = UITextView()
         text.translatesAutoresizingMaskIntoConstraints = false
-        text.font = UIFont(name: "Plain", size: 30)
+        text.textAlignment = .justified
+        text.font = UIFont(name: "AvenirNext-Italic", size: 17)
         text.isEditable = false
         text.isScrollEnabled = true
         return text
@@ -45,7 +46,6 @@ class DataViewController: UIViewController  {
         super.viewDidLoad()
         addSubViews()
         view.backgroundColor = UIColor.white
-
     }
             
     func addSubViews() {
@@ -63,15 +63,15 @@ class DataViewController: UIViewController  {
 
         photoImageView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         photoImageView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        photoImageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
         photoImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         
         view.addSubview(headlineLabel)
         headlineLabel.text = nil
-        headlineLabel.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        headlineLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
         headlineLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
         headlineLabel.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 8).isActive = true
-        headlineLabel.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 280) .isActive = true
+        headlineLabel.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 305) .isActive = true
         
         
         view.addSubview(storyText)
@@ -88,7 +88,15 @@ class DataViewController: UIViewController  {
         
         
     }
-    
+    // Deinitialization of the ViewContoller
+    deinit {
+        detailPresenter = nil
+        photoImageView.image = nil
+        navigationItem.title = nil
+        headlineLabel.text = nil
+        storyText.text = nil
+        print("View has been deinnitialized...")
+    }
  
 }
 

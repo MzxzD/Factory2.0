@@ -32,6 +32,7 @@ class PreviewDataTableViewController: UITableViewController {
     
     }
 
+    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -79,6 +80,7 @@ class PreviewDataTableViewController: UITableViewController {
         navigationController?.pushViewController(newsDetailViewController, animated: true)
         
     }
+
     
 }
 
@@ -104,6 +106,8 @@ extension PreviewDataTableViewController: NewsView {
         tableView.isHidden = true
         errorOccured(value: "No news has been loaded :(")
     }
+    
+
     
     
 }

@@ -62,8 +62,8 @@ class NewsPresenter {
         
     }
     
-    // Setting Up timer for new data
     
+    // Setting Up timer for new data
     func checkTimer() {
         let date = Date()
         let compareTime = time.addingTimeInterval((5*60))
