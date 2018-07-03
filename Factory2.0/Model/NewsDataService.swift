@@ -21,7 +21,6 @@ class NewsDataService {
                 var articles: [Article] = []
                 let responseTuple = response as? (HTTPURLResponse, Data)
                 guard let responseJSON = responseTuple?.1 else {
-                    errorOccured(value: "awwww")
                     throw NSError(
                         domain: "",
                         code: -1,
