@@ -11,24 +11,25 @@ import Alamofire
 import AlamofireImage
 
 
-class PreviewDataTableViewController: UITableViewController {
+class NewsTableViewController: UITableViewController {
 
     let cellIdentifier = "PreviewDataTableViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
-    fileprivate let newsPresenter = NewsPresenter(newsService: NewsService())
+   
+    fileprivate let newsTablePresenter = NewsTablePresenter(newsService: NewsDataService())
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Factory"
-        tableView.register(PreviewDataTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        newsPresenter.attachView(self)
-        newsPresenter.getNews()
+        tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        newsTablePresenter.attachView(self)
 
     }
  
     override func viewDidAppear(_ animated: Bool) {
-        newsPresenter.checkTimer()
+        newsTablePresenter.checkForNewData()
+       
     
     }
 
@@ -39,7 +40,7 @@ class PreviewDataTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsPresenter.newsArray.count
+        return newsTablePresenter.newsArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -47,13 +48,13 @@ class PreviewDataTableViewController: UITableViewController {
         
         // Table view cell are used and should be dequeued using a cell identifier
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PreviewDataTableViewCell else
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsTableViewCell else
         {
             errorOccured(value: "The dequeued cell is not an instance of PreviewDataTableViewCell.")
             return UITableViewCell()
            
         }
-        let newsViewData = newsPresenter.newsArray[indexPath.row]
+        let newsViewData = newsTablePresenter.newsArray[indexPath.row]
         
         cell.headlineLabel.text = newsViewData?.title
         Alamofire.request(URL (string: (newsViewData?.urlToImage)!)!).responseImage
@@ -72,19 +73,19 @@ class PreviewDataTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newsDetailViewController = DataViewController()
-        let newsDetailPresenter = NewsDetailPresenter()
-        let selectedNews = newsPresenter.newsArray[indexPath.row]
-        newsDetailPresenter.newsDetailData = selectedNews
-        newsDetailViewController.detailPresenter = newsDetailPresenter
-        navigationController?.pushViewController(newsDetailViewController, animated: true)
+        let newsViewController = NewsViewController()
+        let newsPresenter = NewsPresenter()
+        let selectedNews = newsTablePresenter.newsArray[indexPath.row]
+        newsPresenter.newsData = selectedNews
+        newsViewController.Presenter = newsPresenter
+        navigationController?.pushViewController(newsViewController, animated: true)
         
     }
 
     
 }
 
-extension PreviewDataTableViewController: NewsView {
+extension NewsTableViewController: NewsView {
  
     func startLoading() {
         loadingIndicator.center = view.center

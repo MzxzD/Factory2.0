@@ -3,7 +3,7 @@ import UIKit
 
 
 // MARK: Properties
-struct Source: Decodable {
+struct ArticleResponse: Decodable {
     let status: String
     let source: String
     let sortBy: String
@@ -19,3 +19,10 @@ struct Article: Decodable{
     let publishedAt: String
 }
 
+struct NewsViewData {
+    
+    let title: String
+    let description: String
+    let urlToImage: String
+    
+}

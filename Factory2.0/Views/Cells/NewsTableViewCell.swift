@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreviewDataTableViewCell: UITableViewCell {
+class NewsTableViewCell: UITableViewCell {
 
     // MARK: Properties
     var headlineLabel: UILabel = {

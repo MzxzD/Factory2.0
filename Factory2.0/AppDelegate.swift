@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: PreviewDataTableViewController())
+        window?.rootViewController = UINavigationController(rootViewController: NewsTableViewController())
         navigationBarAttributes.tintColor = UIColor.white
         navigationBarAttributes.barTintColor = UIColor(red: 0, green: 0.6, blue: 0.949, alpha: 1.0)
         navigationBarAttributes.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
