@@ -52,7 +52,8 @@ class NewsTablePresenter {
                 })
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (newsArray) in
-                    self.newsArray = newsArray
+                self.newsView?.fininshLoading()
+                self.newsArray = newsArray
                 self.newsView?.setNews()
                 let timeSuccess = Date()
                 self.dataDownloadTimestamp = timeSuccess

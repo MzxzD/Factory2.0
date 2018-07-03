@@ -15,19 +15,13 @@ class NewsDataService {
         
         return RxAlamofire
             
-            .requestJSON(.get, urlm!)
+            .data(.get, urlm!)
+
             .map({ (response) -> [Article] in
+                
                 let decoder = JSONDecoder()
                 var articles: [Article] = []
-                let responseTuple = response as? (HTTPURLResponse, Data)
-                guard let responseJSON = responseTuple?.1 else {
-                    throw NSError(
-                        domain: "",
-                        code: -1,
-                        userInfo: [NSLocalizedDescriptionKey: "Could not decode object"]
-                        
-                    )
-                }
+                let responseJSON = response
                 print(responseJSON)
                  do {
                     let data = try decoder.decode(ArticleResponse.self, from: responseJSON)
