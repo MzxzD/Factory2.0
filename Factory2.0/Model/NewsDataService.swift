@@ -19,11 +19,19 @@ class NewsDataService {
             .map({ (response) -> [Article] in
                 let decoder = JSONDecoder()
                 var articles: [Article] = []
+                let responseTuple = response as? (HTTPURLResponse, Data)
+                guard let responseJSON = responseTuple?.1 else {
+                    errorOccured(value: "awwww")
+                    throw NSError(
+                        domain: "",
+                        code: -1,
+                        userInfo: [NSLocalizedDescriptionKey: "Could not decode object"]
+                        
+                    )
+                }
+                print(responseJSON)
                  do {
-                    let responseJSON = response.1
-                    print(responseJSON)
-                    let responseData = responseJSON as! Data
-                    let data = try decoder.decode(ArticleResponse.self, from: responseData)
+                    let data = try decoder.decode(ArticleResponse.self, from: responseJSON)
                     articles = data.articles
                 } catch
                 {

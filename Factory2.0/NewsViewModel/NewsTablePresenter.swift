@@ -16,7 +16,7 @@ class NewsTablePresenter {
     fileprivate var newsView:NewsView?
     var newsArray: [NewsViewData?] = []
     var dataDownloadTimestamp: Date?
-    var disposeBag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     init(newsService:NewsDataService) {
         self.newsService = newsService
