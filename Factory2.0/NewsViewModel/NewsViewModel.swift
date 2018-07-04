@@ -12,7 +12,7 @@ protocol DataView {
     
 }
 
-class NewsPresenter {
+class NewsViewModel {
     
     fileprivate var newsView: DataView?
     

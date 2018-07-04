@@ -3,12 +3,13 @@ import UIKit
 import RxSwift
 
 
-class NewsTablePresenter {
+class NewsTableViewModel {
     
     fileprivate let newsService:NewsDataService
     var newsArray: [NewsData] = []
     var timeDataHasDownloaded: Date?
     var newsSubject = PublishSubject<Bool>()
+    var isLoading = Variable(true)
     
     init(newsService:NewsDataService) {
         self.newsService = newsService
@@ -18,6 +19,7 @@ class NewsTablePresenter {
         
         let newsObserver = newsService.fetchNewsFromAPI()
            _ = newsObserver
+           // .subscribe(isLoading.bind(onNext: true))
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
                 .map({ (artileArray)  -> [NewsData] in
                 return artileArray.map { (news) -> NewsData in
@@ -25,11 +27,11 @@ class NewsTablePresenter {
                 }
             })
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] (newsArray) in
-                guard let _self = self else { return }
-                _self.newsSubject.onNext(true)
-                _self.newsArray = newsArray
-                _self.timeDataHasDownloaded = Date()
+            .subscribe(onNext: { [unowned self] (newsArray) in
+                self.newsSubject.onNext(true)
+                self.isLoading.value = false
+                self.newsArray = newsArray
+                self.timeDataHasDownloaded = Date()
             }
                 //                    , onError: { (<#Error#>) in
                 //                    <#code#>

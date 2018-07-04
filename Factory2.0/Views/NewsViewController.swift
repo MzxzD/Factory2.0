@@ -13,7 +13,7 @@ import AlamofireImage
 class NewsViewController: UIViewController  {
     
     // MARK: variables
-    var Presenter: NewsPresenter!
+    var modelView: NewsViewModel!
     
     var photoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -51,7 +51,7 @@ class NewsViewController: UIViewController  {
     func addSubViews() {
         
         view.addSubview(photoImageView)
-        Alamofire.request(URL (string: Presenter.newsData.urlToImage)!).responseImage
+        Alamofire.request(URL (string: modelView.newsData.urlToImage)!).responseImage
             {
                 response in
                 if let image = response.result.value
@@ -81,16 +81,16 @@ class NewsViewController: UIViewController  {
         storyText.topAnchor.constraint(equalTo: headlineLabel.bottomAnchor, constant: 8).isActive = true
         storyText.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        navigationItem.title = Presenter.newsData?.title
-        headlineLabel.text = Presenter.newsData?.title
-        storyText.text = Presenter.newsData?.description
+        navigationItem.title = modelView.newsData?.title
+        headlineLabel.text = modelView.newsData?.title
+        storyText.text = modelView.newsData?.description
         
         
         
     }
     // Deinitialization of the ViewContoller
     deinit {
-        Presenter = nil
+        modelView = nil
         photoImageView.image = nil
         navigationItem.title = nil
         headlineLabel.text = nil

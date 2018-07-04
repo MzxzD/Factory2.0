@@ -14,11 +14,11 @@ import RxSwift
 
 class NewsTableViewController: UITableViewController {
     
-    let cellIdentifier = "PreviewDataTableViewCell"
+    let cellIdentifier = "NewsTableViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     let disposeBag = DisposeBag()
     
-    fileprivate let newsTablePresenter = NewsTablePresenter(newsService: NewsDataService())
+    fileprivate let newsTableViewMode = NewsTableViewModel(newsService: NewsDataService())
     
     
     override func viewDidLoad() {
@@ -31,7 +31,7 @@ class NewsTableViewController: UITableViewController {
     
     
     override func viewDidAppear(_ animated: Bool) {
-        newsTablePresenter.checkForNewData()
+        newsTableViewMode.checkForNewData()
         
     }
     
@@ -42,7 +42,7 @@ class NewsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsTablePresenter.newsArray.count
+        return newsTableViewMode.newsArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -56,7 +56,7 @@ class NewsTableViewController: UITableViewController {
             return UITableViewCell()
             
         }
-        let newsViewData = newsTablePresenter.newsArray[indexPath.row]
+        let newsViewData = newsTableViewMode.newsArray[indexPath.row]
         
         cell.headlineLabel.text = newsViewData.title
         Alamofire.request(URL (string: (newsViewData.urlToImage))!).responseImage
@@ -76,34 +76,46 @@ class NewsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newsViewController = NewsViewController()
-        let newsPresenter = NewsPresenter()
-        let selectedNews = newsTablePresenter.newsArray[indexPath.row]
+        let newsPresenter = NewsViewModel()
+        let selectedNews = newsTableViewMode.newsArray[indexPath.row]
         newsPresenter.newsData = selectedNews
-        newsViewController.Presenter = newsPresenter
+        newsViewController.modelView = newsPresenter
         navigationController?.pushViewController(newsViewController, animated: true)
         
     }
     
     
     func createLoadingIndicator() {
-        loadingIndicator.center = view.center
-        loadingIndicator.color = UIColor.blue
-        loadingIndicator.startAnimating()
-        view.addSubview(loadingIndicator)
-        
+    
+        let loadingObserver = newsTableViewMode.isLoading
+        loadingObserver.asObservable()
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [unowned self] (event) in
+                
+                if (event) {
+                    self.loadingIndicator.center = self.view.center
+                    self.loadingIndicator.color = UIColor.blue
+                    self.view.addSubview(self.loadingIndicator)
+                    self.loadingIndicator.startAnimating()
+                    print("lol")
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func isDataReady(){
-        let observer = newsTablePresenter.newsSubject
+        let observer = newsTableViewMode.newsSubject
         observer
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] (event) in
-                guard let _self = self else { return }
+            .subscribe(onNext: { [unowned self] (event) in
+                
                 if event {
-                    _self.tableView.reloadData()
-                    _self.loadingIndicator.stopAnimating()
+                    self.tableView.reloadData()
+                    self.loadingIndicator.stopAnimating()
                 }
+
             })
             .disposed(by: disposeBag)
     }
