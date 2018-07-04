@@ -9,13 +9,15 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import RxSwift
 
 
 class NewsTableViewController: UITableViewController {
-
+    
     let cellIdentifier = "PreviewDataTableViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
-   
+    let disposeBag = DisposeBag()
+    
     fileprivate let newsTablePresenter = NewsTablePresenter(newsService: NewsDataService())
     
     
@@ -23,16 +25,16 @@ class NewsTableViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "Factory"
         tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        newsTablePresenter.attachView(self)
-
+        createLoadingIndicator()
+        isDataReady()
     }
- 
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         newsTablePresenter.checkForNewData()
-       
-    
+        
     }
-
+    
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,7 +54,7 @@ class NewsTableViewController: UITableViewController {
         {
             errorOccured(value: "The dequeued cell is not an instance of PreviewDataTableViewCell.")
             return UITableViewCell()
-           
+            
         }
         let newsViewData = newsTablePresenter.newsArray[indexPath.row]
         
@@ -60,11 +62,11 @@ class NewsTableViewController: UITableViewController {
         Alamofire.request(URL (string: (newsViewData?.urlToImage)!)!).responseImage
             {
                 response in
-                    if let image = response.result.value
-                    {
-                        cell.photoImageView.image = image
-                    }
-            }
+                if let image = response.result.value
+                {
+                    cell.photoImageView.image = image
+                }
+        }
         return  cell
     }
     
@@ -81,36 +83,29 @@ class NewsTableViewController: UITableViewController {
         navigationController?.pushViewController(newsViewController, animated: true)
         
     }
-
     
-}
-
-extension NewsTableViewController: NewsView {
- 
-    func startLoading() {
+    
+    func createLoadingIndicator() {
         loadingIndicator.center = view.center
         loadingIndicator.color = UIColor.blue
         loadingIndicator.startAnimating()
         view.addSubview(loadingIndicator)
+        
     }
     
-    func fininshLoading() {
-        loadingIndicator.stopAnimating()
+    func isDataReady(){
+        let observer = newsTablePresenter.newsSubject
+        observer
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (event) in
+                if event {
+                    self.tableView.reloadData()
+                    self.loadingIndicator.stopAnimating()
+                }
+            })
+            .disposed(by: disposeBag)
     }
-    
-    func setNews() {
-        tableView.isHidden = false
-        tableView.reloadData()
-    }
-    
-    func setEmptyNews() {
-        tableView.isHidden = true
-        errorOccured(value: "No news has been loaded :(")
-    }
-    
-
     
     
 }
-
-

@@ -41,13 +41,13 @@ class NewsViewController: UIViewController  {
         return text
     }()
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubViews()
         view.backgroundColor = UIColor.white
     }
-            
+    
     func addSubViews() {
         
         view.addSubview(photoImageView)
@@ -59,8 +59,8 @@ class NewsViewController: UIViewController  {
                     self.photoImageView.image = image
                 }
         }
-       
-
+        
+        
         photoImageView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         photoImageView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         photoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
@@ -97,6 +97,6 @@ class NewsViewController: UIViewController  {
         storyText.text = nil
         print("View has been deinnitialized...")
     }
- 
+    
 }
 
