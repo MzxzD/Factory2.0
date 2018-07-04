@@ -6,48 +6,42 @@ import RxSwift
 class NewsTablePresenter {
     
     fileprivate let newsService:NewsDataService
-    var newsArray: [NewsViewData?] = []
-    var dataDownloadTimestamp: Date?
-    let disposeBag = DisposeBag()
+    var newsArray: [NewsData] = []
+    var timeDataHasDownloaded: Date?
     var newsSubject = PublishSubject<Bool>()
     
     init(newsService:NewsDataService) {
         self.newsService = newsService
     }
     
-    private func getNews(){
+    private func getNewsFromAPI(){
         
-        let newsObserver = newsService.getNews()
-        newsObserver
+        let newsObserver = newsService.fetchNewsFromAPI()
+           _ = newsObserver
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .map({ (artileArray) -> [NewsViewData] in
-                return artileArray.map { (news) -> NewsViewData in
-                    print(news)
-                    return NewsViewData(title: news.title, description: news.description, urlToImage: news.urlToImage)
+                .map({ (artileArray)  -> [NewsData] in
+                return artileArray.map { (news) -> NewsData in
+                    return NewsData(title: news.title, description: news.description, urlToImage: news.urlToImage)
                 }
             })
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (newsArray) in
-                
-                self.newsSubject.onNext(true)
-                self.newsArray = newsArray
-                let timeSuccess = Date()
-                self.dataDownloadTimestamp = timeSuccess
+            .subscribe(onNext: { [weak self] (newsArray) in
+                guard let _self = self else { return }
+                _self.newsSubject.onNext(true)
+                _self.newsArray = newsArray
+                _self.timeDataHasDownloaded = Date()
             }
                 //                    , onError: { (<#Error#>) in
                 //                    <#code#>
                 //                }
             )
-            
-            .disposed(by: disposeBag)
-        
     }
     
     // Setting Up timer for new data
     func checkForNewData() {
         let date = Date()
-        guard let compareTime = dataDownloadTimestamp?.addingTimeInterval((5*60)) else {
-            getNews()
+        guard let compareTime = timeDataHasDownloaded?.addingTimeInterval((5*60)) else {
+            getNewsFromAPI()
             print("First time...")
             return
         }
@@ -56,7 +50,7 @@ class NewsTablePresenter {
             return
         } else {
             print("hueheheheh 3:)")
-            getNews()
+            getNewsFromAPI()
         }
     }
     

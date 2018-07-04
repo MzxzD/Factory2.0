@@ -58,8 +58,8 @@ class NewsTableViewController: UITableViewController {
         }
         let newsViewData = newsTablePresenter.newsArray[indexPath.row]
         
-        cell.headlineLabel.text = newsViewData?.title
-        Alamofire.request(URL (string: (newsViewData?.urlToImage)!)!).responseImage
+        cell.headlineLabel.text = newsViewData.title
+        Alamofire.request(URL (string: (newsViewData.urlToImage))!).responseImage
             {
                 response in
                 if let image = response.result.value
@@ -98,10 +98,11 @@ class NewsTableViewController: UITableViewController {
         observer
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (event) in
+            .subscribe(onNext: { [weak self] (event) in
+                guard let _self = self else { return }
                 if event {
-                    self.tableView.reloadData()
-                    self.loadingIndicator.stopAnimating()
+                    _self.tableView.reloadData()
+                    _self.loadingIndicator.stopAnimating()
                 }
             })
             .disposed(by: disposeBag)

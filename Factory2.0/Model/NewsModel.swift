@@ -19,7 +19,7 @@ struct Article: Decodable{
     let publishedAt: String
 }
 
-struct NewsViewData {
+struct NewsData {
     
     let title: String
     let description: String
