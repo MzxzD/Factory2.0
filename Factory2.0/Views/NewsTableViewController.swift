@@ -17,6 +17,7 @@ class NewsTableViewController: UITableViewController {
     let cellIdentifier = "NewsTableViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     let disposeBag = DisposeBag()
+   
     
     fileprivate let newsTableViewMode = NewsTableViewModel(newsService: NewsDataService())
     
@@ -25,13 +26,19 @@ class NewsTableViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "Factory"
         tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        createLoadingIndicator()
-        isDataReady()
+        innitializeLoaderObservable()
+        initializeDataObservable()
+        
+        newsTableViewMode.initializeObservableDataAPI().disposed(by: disposeBag)
+        refreshData()
+        
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
         newsTableViewMode.checkForNewData()
+        //newsTableViewMode.dummyDownload()
+        // Chech for new data 
         
     }
     
@@ -85,7 +92,17 @@ class NewsTableViewController: UITableViewController {
     }
     
     
-    func createLoadingIndicator() {
+    func refreshData() {
+        var refresher: UIRefreshControl!
+        refresher = UIRefreshControl()
+        tableView.addSubview(refresher)
+        refresher.attributedTitle = NSAttributedString(string: "Refreshing")
+        refresher.tintColor = UIColor(red: 0, green: 0.6, blue: 0.949, alpha: 1.0)
+       // refresher.addTarget(self, action: #selector(newsTableViewMode.initializeObservableDataAPI), for: .valueChanged)
+    }
+    
+    
+    func innitializeLoaderObservable() {
     
         let loadingObserver = newsTableViewMode.isLoading
         loadingObserver.asObservable()
@@ -98,14 +115,16 @@ class NewsTableViewController: UITableViewController {
                     self.loadingIndicator.color = UIColor.blue
                     self.view.addSubview(self.loadingIndicator)
                     self.loadingIndicator.startAnimating()
-                    print("lol")
+                    print("Loader Initialised!")
+                } else{
+                    self.loadingIndicator.stopAnimating()
                 }
             })
             .disposed(by: disposeBag)
     }
     
-    func isDataReady(){
-        let observer = newsTableViewMode.newsSubject
+    func initializeDataObservable(){
+        let observer = newsTableViewMode.refreshView
         observer
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
@@ -113,7 +132,6 @@ class NewsTableViewController: UITableViewController {
                 
                 if event {
                     self.tableView.reloadData()
-                    self.loadingIndicator.stopAnimating()
                 }
 
             })
