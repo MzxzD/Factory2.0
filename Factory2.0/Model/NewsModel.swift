@@ -19,10 +19,13 @@ struct Article: Decodable{
     let publishedAt: String
 }
 
-struct NewsData {
-    
-    let title: String
-    let description: String
-    let urlToImage: String
-    
+struct WrapperArticleData {
+    let data: [Article]
+    let errorMessage: String?
 }
+
+struct WrapperNewsData {
+    let data: [NewsData]
+    let errorMessage: String?
+}
+

@@ -17,6 +17,8 @@ class NewsTableViewController: UITableViewController {
     let cellIdentifier = "NewsTableViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     let disposeBag = DisposeBag()
+    var refresher: UIRefreshControl!
+    var alert = UIAlertController()
    
     
     fileprivate let newsTableViewMode = NewsTableViewModel(newsService: NewsDataService())
@@ -28,7 +30,7 @@ class NewsTableViewController: UITableViewController {
         tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         innitializeLoaderObservable()
         initializeDataObservable()
-        
+        initializeError()
         newsTableViewMode.initializeObservableDataAPI().disposed(by: disposeBag)
         refreshData()
         
@@ -92,13 +94,19 @@ class NewsTableViewController: UITableViewController {
     }
     
     
+    @objc func triggerDownload() {
+        newsTableViewMode.triggerDownload.onNext(true)
+        
+    }
+    
     func refreshData() {
-        var refresher: UIRefreshControl!
+
         refresher = UIRefreshControl()
         tableView.addSubview(refresher)
         refresher.attributedTitle = NSAttributedString(string: "Refreshing")
         refresher.tintColor = UIColor(red: 0, green: 0.6, blue: 0.949, alpha: 1.0)
-       // refresher.addTarget(self, action: #selector(newsTableViewMode.initializeObservableDataAPI), for: .valueChanged)
+        refresher.addTarget(self, action: #selector(triggerDownload), for: .valueChanged)
+        initializeError()
     }
     
     
@@ -118,9 +126,31 @@ class NewsTableViewController: UITableViewController {
                     print("Loader Initialised!")
                 } else{
                     self.loadingIndicator.stopAnimating()
+//                    self.loadingIndicator.removeFromSuperview()
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    
+    func initializeError() {
+        let errorObserver = newsTableViewMode.errorOccured
+        errorObserver
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (event) in
+                if event {
+                    self.loadingIndicator.stopAnimating()
+                    self.refresher.endRefreshing()
+                    self.refresher.isHidden = true
+                    print("Event triggered")
+                    downloadError(viewToPresent: self)
+                } else {
+                    print("Event Not triggered")
+                }
+            })
+        .disposed(by: disposeBag)
+//        errorOccured(value: )
     }
     
     func initializeDataObservable(){
@@ -132,6 +162,7 @@ class NewsTableViewController: UITableViewController {
                 
                 if event {
                     self.tableView.reloadData()
+                    self.refresher.endRefreshing()
                 }
 
             })
