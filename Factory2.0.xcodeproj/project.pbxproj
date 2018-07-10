@@ -22,6 +22,7 @@
 		CF137A3520E80779002A45A6 /* ErrorOccured.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF137A3220E80779002A45A6 /* ErrorOccured.swift */; };
 		CF4B6E7C20EF4DFA00DBCC7E /* NewsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4B6E7B20EF4DFA00DBCC7E /* NewsData.swift */; };
 		CFD23AC620F489CE00659729 /* NewsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD23AC520F489CE00659729 /* NewsCoordinator.swift */; };
+		CFD23AC820F4F2DA00659729 /* NewsCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD23AC720F4F2DA00659729 /* NewsCoordinatorDelegate.swift */; };
 		CFD8C02520F3851F00063F49 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02420F3851F00063F49 /* AppCoordinator.swift */; };
 		CFD8C02720F3852B00063F49 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02620F3852B00063F49 /* Coordinator.swift */; };
 		CFD8C02A20F3965400063F49 /* NewsTableCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02920F3965400063F49 /* NewsTableCoordinator.swift */; };
@@ -49,6 +50,7 @@
 		CF137A3220E80779002A45A6 /* ErrorOccured.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorOccured.swift; sourceTree = "<group>"; };
 		CF4B6E7B20EF4DFA00DBCC7E /* NewsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsData.swift; sourceTree = "<group>"; };
 		CFD23AC520F489CE00659729 /* NewsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCoordinator.swift; sourceTree = "<group>"; };
+		CFD23AC720F4F2DA00659729 /* NewsCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		CFD8C02420F3851F00063F49 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		CFD8C02620F3852B00063F49 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		CFD8C02920F3965400063F49 /* NewsTableCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableCoordinator.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				CFD23AC520F489CE00659729 /* NewsCoordinator.swift */,
+				CFD23AC720F4F2DA00659729 /* NewsCoordinatorDelegate.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				CF137A2C20E8076A002A45A6 /* NewsModel.swift in Sources */,
 				CF137A1420E8073C002A45A6 /* AppDelegate.swift in Sources */,
 				CF4B6E7C20EF4DFA00DBCC7E /* NewsData.swift in Sources */,
+				CFD23AC820F4F2DA00659729 /* NewsCoordinatorDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

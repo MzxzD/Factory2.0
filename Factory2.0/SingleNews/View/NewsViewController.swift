@@ -47,6 +47,11 @@ class NewsViewController: UIViewController  {
         addSubViews()
         view.backgroundColor = UIColor.white
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        if(isMovingFromParentViewController){
+           // modelView.delegate?.
+        }
+    }
     
     func addSubViews() {
         

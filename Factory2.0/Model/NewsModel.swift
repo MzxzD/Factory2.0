@@ -25,13 +25,10 @@ struct Name: Decodable {
     let name: String
 }
 
-struct WrapperArticleData {
-    let data: [Article]
+
+struct WrapperData<T> {
+    let data: [T]
     let errorMessage: String?
 }
 
-struct WrapperNewsData {
-    let data: [NewsData]
-    let errorMessage: String?
-}
 

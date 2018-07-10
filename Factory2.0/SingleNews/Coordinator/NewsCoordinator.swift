@@ -15,11 +15,13 @@ class NewsCoordinator: Coordinator {
     private let controller: NewsViewController
     weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
     
-    
-    init(presenter: UINavigationController) {
+    init(presenter: UINavigationController, news: NewsData) {
         self.presenter = presenter
-        let controller = NewsViewController()
-        self.controller = controller
+        let newsController = NewsViewController()
+        let viewModel = NewsViewModel()
+        newsController.modelView = viewModel
+        self.controller = newsController
+        viewModel.newsData = news
     }
     
     
@@ -34,3 +36,5 @@ extension NewsCoordinator: ParentCoordinatorDelegate {
         removeChildCoordinator(childCoordinator: coordinator)
     }
 }
+
+

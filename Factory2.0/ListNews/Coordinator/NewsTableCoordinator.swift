@@ -13,43 +13,48 @@ import UIKit
 
 class NewsTableCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
-    let controller: NewsTableViewController
     var presenter: UINavigationController
-    weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
+    let controller: NewsTableViewController
+ 
     
     init(presenter: UINavigationController) {
         self.presenter = presenter
-        let controller = NewsTableViewController()
-        var viewModel = NewsTableViewModel(newsService: NewsDataService())
-        controller.newTableVieMode = viewModel
-        self.controller = controller
+        let newsController = NewsTableViewController()
+        let tableViewModel = NewsTableViewModel(newsService: NewsDataService())
+        newsController.newTableVieMode = tableViewModel
+        self.controller = newsController
+ 
+    }
+    
+    deinit {
+        print("deinit")
     }
     
     func start() {
+        print("Coordinator is beaing used")
+        controller.newTableVieMode.newsTableDelegate = self
         presenter.pushViewController(controller, animated: true)
     }
     
-    
 }
-
 extension NewsTableCoordinator: NewsTableCoordinatorDelegate {
+    
+    
+    
     func openDetailNews(selectedNews: NewsData) {
-        let coordinator = NewsCoordinator(presenter: presenter)
-        coordinator.parentCoordinatorDelegate = self
-        addChildCoordinator(childCoordinator: coordinator)
-        coordinator.start()
+        let newsDetailCoordinator = NewsCoordinator(presenter: self.presenter, news: selectedNews)
+        newsDetailCoordinator.start()
+        self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
+        print(self.childCoordinator)
+        
     }
     
     func viewControllerHasFinished() {
-        childCoordinator.removeAll()
-        parentCoordinatorDelegate?.childHasFinished(coordinator: self)
+        
     }
+    
+    
     
     
 }
 
-extension NewsTableCoordinator: ParentCoordinatorDelegate {
-    func childHasFinished(coordinator: Coordinator) {
-        removeChildCoordinator(childCoordinator: coordinator)
-    }
-}

@@ -9,13 +9,13 @@ class NewsDataService {
     let urlm = URL(string: "https://newsapi.org/v1/articles?apiKey=91f05f55e0e441699553b373b30eea61&sortBy=top&source=bbc-news")
   
     
-    func fetchNewsFromAPI() -> Observable<WrapperArticleData>{
+    func fetchNewsFromAPI() -> Observable<WrapperData<Article>>{
         
         return RxAlamofire
             
             .data(.get, urlm!)
             
-            .map({ (response) -> WrapperArticleData in
+            .map({ (response) -> WrapperData<Article> in
                 
                 print("Downloading Data")
                 let decoder = JSONDecoder()
@@ -29,14 +29,15 @@ class NewsDataService {
                 } catch let error
                 {
                     print(error)
-                    return WrapperArticleData(data: [], errorMessage: error.localizedDescription)
+                  
+                    return WrapperData(data: [], errorMessage: error.localizedDescription)
                 }
                 print("Download Complete!")
-                return WrapperArticleData(data: articles, errorMessage : nil)
+                return WrapperData(data: articles, errorMessage: nil)
             })
-            .catchError({ (error) -> Observable<WrapperArticleData> in
+            .catchError({ (error) -> Observable<WrapperData<Article>> in
                 print(error)
-                return Observable.just(WrapperArticleData(data: [], errorMessage : error.localizedDescription))
+                return Observable.just(WrapperData(data: [], errorMessage: error.localizedDescription))
             })
         
 

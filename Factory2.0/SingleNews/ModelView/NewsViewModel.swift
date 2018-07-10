@@ -15,7 +15,7 @@ protocol DataView {
 class NewsViewModel {
     
     fileprivate var newsView: DataView?
-    
+    //weak var delegate: NewsCoordinatorDelegate? 
     var newsData: NewsData!
     
     func attachView(_ view: DataView){

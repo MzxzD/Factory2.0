@@ -20,11 +20,8 @@ class NewsTableViewController: UITableViewController {
     var refresher: UIRefreshControl!
     var alert = UIAlertController()
     var newTableVieMode: NewsTableViewModel!
+    var newsCoordinator: Coordinator!
    
-  // Preptaviti da se u viewModel Injecta iz coordinatora
-    
-   
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,14 +30,14 @@ class NewsTableViewController: UITableViewController {
         innitializeLoaderObservable()
         initializeDataObservable()
         initializeError()
-        newsTableViewMode.initializeObservableDataAPI().disposed(by: disposeBag)
+        newTableVieMode.initializeObservableDataAPI().disposed(by: disposeBag)
         refreshData()
         
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
-        newsTableViewMode.checkForNewData()
+        newTableVieMode.checkForNewData()
         // Chech for new data 
         
     }
@@ -52,7 +49,7 @@ class NewsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsTableViewMode.newsArray.count
+        return newTableVieMode.newsArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -66,7 +63,7 @@ class NewsTableViewController: UITableViewController {
             return UITableViewCell()
             
         }
-        let newsViewData = newsTableViewMode.newsArray[indexPath.row]
+        let newsViewData = newTableVieMode.newsArray[indexPath.row]
         
         cell.headlineLabel.text = newsViewData.title
         Alamofire.request(URL (string: (newsViewData.urlToImage))!).responseImage
@@ -86,19 +83,19 @@ class NewsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
-        let newsViewController = NewsViewController()
-        let newsPresenter = NewsViewModel()
-        let selectedNews = newsTableViewMode.newsArray[indexPath.row]
-        newsPresenter.newsData = selectedNews
-        newsViewController.modelView = newsPresenter
-        navigationController?.pushViewController(newsViewController, animated: true)
+//        let newsViewController = NewsViewController()
+//        let newsPresenter = NewsViewModel()
+//        let selectedNews = newTableVieMode.newsArray[indexPath.row]
+//        newsPresenter.newsData = selectedNews
+//        newsViewController.modelView = newsPresenter
+//        navigationController?.pushViewController(newsViewController, animated: true)
 
-
+        newTableVieMode.newsSelected(selectedNews: indexPath.row)
     }
     
     
     @objc func triggerDownload() {
-        newsTableViewMode.triggerDownload.onNext(true)
+        newTableVieMode.triggerDownload.onNext(true)
         
     }
     
@@ -115,7 +112,7 @@ class NewsTableViewController: UITableViewController {
     
     func innitializeLoaderObservable() {
     
-        let loadingObserver = newsTableViewMode.isLoading
+        let loadingObserver = newTableVieMode.isLoading
         loadingObserver.asObservable()
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
@@ -137,7 +134,7 @@ class NewsTableViewController: UITableViewController {
     
     
     func initializeError() {
-        let errorObserver = newsTableViewMode.errorOccured
+        let errorObserver = newTableVieMode.errorOccured
         errorObserver
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
@@ -157,7 +154,7 @@ class NewsTableViewController: UITableViewController {
     }
     
     func initializeDataObservable(){
-        let observer = newsTableViewMode.refreshView
+        let observer = newTableVieMode.refreshView
         observer
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)

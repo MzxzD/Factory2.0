@@ -7,17 +7,6 @@ class NewsTableViewModel {
     
     fileprivate let newsService:NewsDataService
     var newsArray: [NewsData] = []
-    
-    
-    
-    var sampleArray: [NewsData] =   [NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg"),
-                                     NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg"),
-                                    NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg"),
-                                    NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg"),
-                                    NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg")]
-    
-    
-    
     var timeDataHasDownloaded: Date?
     var refreshView = PublishSubject<Bool>()
     var isLoading = PublishSubject<Bool>()
@@ -36,7 +25,7 @@ class NewsTableViewModel {
         
         
         
-        let downloadObserver = triggerDownload.flatMap { [unowned self] (_) -> Observable<WrapperArticleData> in
+        let downloadObserver = triggerDownload.flatMap { [unowned self] (_) -> Observable<WrapperData<Article>> in
             print("Download Observer Initialised!")
             self.isLoading.onNext(true)
             return self.newsService.fetchNewsFromAPI()
@@ -45,20 +34,14 @@ class NewsTableViewModel {
         return downloadObserver.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
             
-            .map({ (wrapperArticleData) -> WrapperNewsData  in
+            .map({ (wrapperArticleData) -> WrapperData<NewsData>  in
                 print("wrappedArticle into WrappedNews")
-                return WrapperNewsData(data:wrapperArticleData.data.map({ (article) -> NewsData in
+                return WrapperData<NewsData>(data:wrapperArticleData.data.map({ (article) -> NewsData in
                     print("WrappedNews.data save NewsData")
                     return NewsData(title: article.title, description: article.description, urlToImage: article.urlToImage)
                 }), errorMessage: wrapperArticleData.errorMessage )
             })
-//            .map({ (wrapperNewsData) -> [NewsData] in
-//                return wrapperNewsData.data
-//            })
 
-            
-            
-            
             .subscribe(onNext: { [unowned self] (newsArray) in
                 
                 if newsArray.errorMessage == nil {
@@ -67,14 +50,13 @@ class NewsTableViewModel {
                     self.isLoading.onNext(false)
                     self.newsArray = newsArray.data
                 } else {
-                    self.newsArray = self.sampleArray
                     self.refreshView.onNext(true)
                     self.errorOccured.onNext(true)
                     print("Error Occured")
                 }
             })
     }
-    
+
     // Setting Up timer for new data
     func checkForNewData() {
         print("ChechForNewData initialised!")
@@ -96,8 +78,9 @@ class NewsTableViewModel {
             self.triggerDownload.onNext(true)
         }
     }
-    
-    func pushNewsToDetail() {
-   //     self.newsTableDelegate?.openDetailNews(selectedNews: NewsData)
+
+    func newsSelected(selectedNews: Int) {
+        print("PushToDetail function initiated")
+        self.newsTableDelegate?.openDetailNews(selectedNews: newsArray[selectedNews])
     }
 }

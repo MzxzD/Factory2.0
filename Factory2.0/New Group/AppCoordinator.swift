@@ -12,26 +12,27 @@ import UIKit
 class AppCoordinator: Coordinator{
     
     var childCoordinator: [Coordinator] = []
-    var presenter: UINavigationController
+    var presenter = UINavigationController()
     let window: UIWindow
-    let controller: NewsTableViewController
     
     init(window: UIWindow) {
         self.window = window
-        controller = NewsTableViewController()
-        presenter = UINavigationController()
-        
-
+       
+    
     }
     
 
     func start() {
         window.rootViewController = presenter
         window.makeKeyAndVisible()
-        presenter.pushViewController(controller, animated: true)
+        let coordinator = NewsTableCoordinator(presenter: self.presenter)
+        coordinator.addChildCoordinator(childCoordinator: coordinator)
+        coordinator.start()
         
         
     }
 
-
 }
+
+
+
