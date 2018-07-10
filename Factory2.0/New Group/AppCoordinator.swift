@@ -25,8 +25,10 @@ class AppCoordinator: Coordinator{
     func start() {
         window.rootViewController = presenter
         window.makeKeyAndVisible()
-        let coordinator = NewsTableCoordinator(presenter: self.presenter)
-        coordinator.addChildCoordinator(childCoordinator: coordinator)
+        let coordinator = ListNewsCoordinator(presenter: self.presenter)
+        self.addChildCoordinator(childCoordinator: coordinator)
+        print(self.childCoordinator)
+        
         coordinator.start()
         
         

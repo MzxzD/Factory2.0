@@ -1,6 +1,3 @@
-import UIKit
-
-
 
 // MARK: Properties
 struct ArticleResponse: Decodable {
@@ -11,8 +8,6 @@ struct ArticleResponse: Decodable {
 }
 
 struct Article: Decodable{
- 
-   // let source: [Name]
     let author: String
     let title: String
     let description: String
@@ -20,15 +15,7 @@ struct Article: Decodable{
     let urlToImage: String
     let publishedAt: String?
 }
-struct Name: Decodable {
-    let id: String
-    let name: String
-}
 
 
-struct WrapperData<T> {
-    let data: [T]
-    let errorMessage: String?
-}
 
 

@@ -24,5 +24,4 @@ public extension Coordinator {
     func removeChildCoordinator(childCoordinator: Coordinator){
         self.childCoordinator = self.childCoordinator.filter { $0 !== childCoordinator }
     }
-    
 }

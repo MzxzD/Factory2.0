@@ -4,16 +4,15 @@ import RxSwift
 import RxCocoa
 import RxAlamofire
 
-class NewsDataService {
-    let url = "https://newsapi.org/v2/everything?sources=bbc-news&apiKey=68e78694cad14600b6db78a39e51f374"
-    let urlm = URL(string: "https://newsapi.org/v1/articles?apiKey=91f05f55e0e441699553b373b30eea61&sortBy=top&source=bbc-news")
+class APIRepository {
+    let url = URL(string: "https://newsapi.org/v1/articles?apiKey=91f05f55e0e441699553b373b30eea61&sortBy=top&source=bbc-news")
   
     
     func fetchNewsFromAPI() -> Observable<WrapperData<Article>>{
         
         return RxAlamofire
             
-            .data(.get, urlm!)
+            .data(.get, url!)
             
             .map({ (response) -> WrapperData<Article> in
                 

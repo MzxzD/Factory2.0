@@ -3,19 +3,18 @@ import UIKit
 import RxSwift
 
 
-class NewsTableViewModel {
+class ListNewsViewModel {
     
-    fileprivate let newsService:NewsDataService
-    var newsArray: [NewsData] = []
-    var timeDataHasDownloaded: Date?
-    var refreshView = PublishSubject<Bool>()
-    var isLoading = PublishSubject<Bool>()
+    fileprivate let newsService:APIRepository
+    var newsData: [NewsData] = []
+    var successDownloadTime: Date?
+    var dataIsReady = PublishSubject<Bool>()
+    var loaderControll = PublishSubject<Bool>()
     var errorOccured = PublishSubject<Bool>()
-    weak var newsTableDelegate: NewsTableCoordinatorDelegate?
+    weak var listNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
+    var downloadTrigger = PublishSubject<Bool>()
     
-    var triggerDownload = PublishSubject<Bool>()
-    
-    init(newsService:NewsDataService) {
+    init(newsService:APIRepository) {
         self.newsService = newsService
     }
     
@@ -25,9 +24,9 @@ class NewsTableViewModel {
         
         
         
-        let downloadObserver = triggerDownload.flatMap { [unowned self] (_) -> Observable<WrapperData<Article>> in
+        let downloadObserver = downloadTrigger.flatMap { [unowned self] (_) -> Observable<WrapperData<Article>> in
             print("Download Observer Initialised!")
-            self.isLoading.onNext(true)
+            self.loaderControll.onNext(true)
             return self.newsService.fetchNewsFromAPI()
         }
         
@@ -37,7 +36,7 @@ class NewsTableViewModel {
             .map({ (wrapperArticleData) -> WrapperData<NewsData>  in
                 print("wrappedArticle into WrappedNews")
                 return WrapperData<NewsData>(data:wrapperArticleData.data.map({ (article) -> NewsData in
-                    print("WrappedNews.data save NewsData")
+                   // print("WrappedNews.data save NewsData")
                     return NewsData(title: article.title, description: article.description, urlToImage: article.urlToImage)
                 }), errorMessage: wrapperArticleData.errorMessage )
             })
@@ -46,11 +45,11 @@ class NewsTableViewModel {
                 
                 if newsArray.errorMessage == nil {
                     
-                    self.refreshView.onNext(true)
-                    self.isLoading.onNext(false)
-                    self.newsArray = newsArray.data
+                    self.dataIsReady.onNext(true)
+                    self.loaderControll.onNext(false)
+                    self.newsData = newsArray.data
                 } else {
-                    self.refreshView.onNext(true)
+                    self.dataIsReady.onNext(true)
                     self.errorOccured.onNext(true)
                     print("Error Occured")
                 }
@@ -61,13 +60,13 @@ class NewsTableViewModel {
     func checkForNewData() {
         print("ChechForNewData initialised!")
         let currentTime = Date()
-        if (timeDataHasDownloaded == nil){
-            self.triggerDownload.onNext(true)
-            timeDataHasDownloaded = currentTime
+        if (successDownloadTime == nil){
+            self.downloadTrigger.onNext(true)
+            successDownloadTime = currentTime
             print("First time Download")
             return
         }
-        let compareCurrentTimeAndTimeDataHasDownloaded =  timeDataHasDownloaded?.addingTimeInterval((5*60))
+        let compareCurrentTimeAndTimeDataHasDownloaded =  successDownloadTime?.addingTimeInterval((5*60))
         
         
         if compareCurrentTimeAndTimeDataHasDownloaded! > currentTime  {
@@ -75,12 +74,12 @@ class NewsTableViewModel {
             return
         } else {
             print("5minutes has passed, downloading anew.")
-            self.triggerDownload.onNext(true)
+            self.downloadTrigger.onNext(true)
         }
     }
 
     func newsSelected(selectedNews: Int) {
         print("PushToDetail function initiated")
-        self.newsTableDelegate?.openDetailNews(selectedNews: newsArray[selectedNews])
+        self.listNewsCoordinatorDelegate?.openSingleNews(selectedNews: newsData[selectedNews])
     }
 }

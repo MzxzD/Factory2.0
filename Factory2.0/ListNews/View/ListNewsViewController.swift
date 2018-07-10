@@ -12,36 +12,42 @@ import AlamofireImage
 import RxSwift
 
 
-class NewsTableViewController: UITableViewController {
+class ListNewsViewController: UITableViewController {
     
-    let cellIdentifier = "NewsTableViewCell"
+    let cellIdentifier = "ListNewsViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     let disposeBag = DisposeBag()
     var refresher: UIRefreshControl!
     var alert = UIAlertController()
-    var newTableVieMode: NewsTableViewModel!
-    var newsCoordinator: Coordinator!
+    var listNewsViewModel: ListNewsViewModel!
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Factory"
-        tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
         innitializeLoaderObservable()
         initializeDataObservable()
         initializeError()
-        newTableVieMode.initializeObservableDataAPI().disposed(by: disposeBag)
+        listNewsViewModel.initializeObservableDataAPI().disposed(by: disposeBag)
         refreshData()
         
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
-        newTableVieMode.checkForNewData()
+        listNewsViewModel.checkForNewData()
         // Chech for new data 
         
     }
     
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+       // if self.isMovingToParentViewController {
+            listNewsViewModel.listNewsCoordinatorDelegate?.viewControllerHasFinished()
+       // }
+    }
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -49,7 +55,7 @@ class NewsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newTableVieMode.newsArray.count
+        return listNewsViewModel.newsData.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -57,21 +63,21 @@ class NewsTableViewController: UITableViewController {
         
         // Table view cell are used and should be dequeued using a cell identifier
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? NewsTableViewCell else
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ListNewsViewCell else
         {
             errorOccured(value: "The dequeued cell is not an instance of PreviewDataTableViewCell.")
             return UITableViewCell()
             
         }
-        let newsViewData = newTableVieMode.newsArray[indexPath.row]
+        let newsViewData = listNewsViewModel.newsData[indexPath.row]
         
-        cell.headlineLabel.text = newsViewData.title
+        cell.newsTitle.text = newsViewData.title
         Alamofire.request(URL (string: (newsViewData.urlToImage))!).responseImage
             {
                 response in
                 if let image = response.result.value
                 {
-                    cell.photoImageView.image = image
+                    cell.newsImage.image = image
                 }
         }
         return  cell
@@ -90,12 +96,12 @@ class NewsTableViewController: UITableViewController {
 //        newsViewController.modelView = newsPresenter
 //        navigationController?.pushViewController(newsViewController, animated: true)
 
-        newTableVieMode.newsSelected(selectedNews: indexPath.row)
+        listNewsViewModel.newsSelected(selectedNews: indexPath.row)
     }
     
     
     @objc func triggerDownload() {
-        newTableVieMode.triggerDownload.onNext(true)
+        listNewsViewModel.downloadTrigger.onNext(true)
         
     }
     
@@ -112,7 +118,7 @@ class NewsTableViewController: UITableViewController {
     
     func innitializeLoaderObservable() {
     
-        let loadingObserver = newTableVieMode.isLoading
+        let loadingObserver = listNewsViewModel.loaderControll
         loadingObserver.asObservable()
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
@@ -134,7 +140,7 @@ class NewsTableViewController: UITableViewController {
     
     
     func initializeError() {
-        let errorObserver = newTableVieMode.errorOccured
+        let errorObserver = listNewsViewModel.errorOccured
         errorObserver
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
@@ -154,7 +160,7 @@ class NewsTableViewController: UITableViewController {
     }
     
     func initializeDataObservable(){
-        let observer = newTableVieMode.refreshView
+        let observer = listNewsViewModel.dataIsReady
         observer
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)

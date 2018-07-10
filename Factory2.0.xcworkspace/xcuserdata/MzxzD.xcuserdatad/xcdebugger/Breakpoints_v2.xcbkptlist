@@ -9,71 +9,8 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Factory2.0/SingleNews/ModelView/NewsViewModel.swift"
-            timestampString = "552923920.614027"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "NewsViewModel"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Factory2_0.NewsViewModel.(newsView in _9A2A1A54025AC6B06E900B3DB5FD3E66).getter : Swift.Optional&lt;Factory2_0.DataView&gt;"
-                  moduleName = "Factory2.0"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/MzxzD/Desktop/FACTORY_Praksa/Factory2.0/Factory2.0/SingleNews/ModelView/NewsViewModel.swift"
-                  timestampString = "552920810.18562"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "178">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Factory2_0.NewsViewModel.(newsView in _9A2A1A54025AC6B06E900B3DB5FD3E66).setter : Swift.Optional&lt;Factory2_0.DataView&gt;"
-                  moduleName = "Factory2.0"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/MzxzD/Desktop/FACTORY_Praksa/Factory2.0/Factory2.0/SingleNews/ModelView/NewsViewModel.swift"
-                  timestampString = "552920810.192222"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "484">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Factory2_0.NewsViewModel.init() -&gt; Factory2_0.NewsViewModel"
-                  moduleName = "Factory2.0"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/MzxzD/Desktop/FACTORY_Praksa/Factory2.0/Factory2.0/SingleNews/ModelView/NewsViewModel.swift"
-                  timestampString = "552920810.214424"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "79">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Factory2.0/ListNews/ModelView/NewsTableViewModel.swift"
-            timestampString = "552923920.6141011"
+            timestampString = "552927241.793173"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "84"
@@ -89,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Factory2.0/ListNews/Coordinator/NewsTableCoordinator.swift"
-            timestampString = "552923920.6141551"
+            timestampString = "552947708.458357"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "35"
@@ -105,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Factory2.0/ListNews/Coordinator/NewsTableCoordinator.swift"
-            timestampString = "552923920.614514"
+            timestampString = "552947708.458685"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"

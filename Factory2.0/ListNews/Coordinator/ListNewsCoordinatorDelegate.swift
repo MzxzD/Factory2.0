@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol NewsTableCoordinatorDelegate: CoordinatorDelegate {
-    func openDetailNews(selectedNews: NewsData)
+protocol ListNewsCoordinatorDelegate: CoordinatorDelegate {
+    func openSingleNews(selectedNews: NewsData)
 }

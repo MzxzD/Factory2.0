@@ -8,10 +8,10 @@
 
 import UIKit
 
-class NewsTableViewCell: UITableViewCell {
+class ListNewsViewCell: UITableViewCell {
 
     // MARK: Properties
-    var headlineLabel: UILabel = {
+    var newsTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
@@ -22,7 +22,7 @@ class NewsTableViewCell: UITableViewCell {
 
     
     
-    var photoImageView: UIImageView = {
+    var newsImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -50,15 +50,15 @@ class NewsTableViewCell: UITableViewCell {
     
     
     override func layoutSubviews() {
-        self.contentView.addSubview(photoImageView)
-        photoImageView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
-        photoImageView.widthAnchor.constraint(equalToConstant: 130).isActive = true
-        photoImageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        self.contentView.addSubview(newsImage)
+        newsImage.leftAnchor.constraint(equalTo: self.contentView.leftAnchor).isActive = true
+        newsImage.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        newsImage.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        self.contentView.addSubview(headlineLabel)
-        headlineLabel.leftAnchor.constraint(equalTo: photoImageView.rightAnchor, constant: 8).isActive = true
-        headlineLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: 8).isActive = true
-        headlineLabel.centerYAnchor.constraint(equalTo: photoImageView.centerYAnchor, constant: -8).isActive = true
+        self.contentView.addSubview(newsTitle)
+        newsTitle.leftAnchor.constraint(equalTo: newsImage.rightAnchor, constant: 8).isActive = true
+        newsTitle.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: 8).isActive = true
+        newsTitle.centerYAnchor.constraint(equalTo: newsImage.centerYAnchor, constant: -8).isActive = true
         
 
         
