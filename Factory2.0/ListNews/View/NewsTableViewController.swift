@@ -19,9 +19,11 @@ class NewsTableViewController: UITableViewController {
     let disposeBag = DisposeBag()
     var refresher: UIRefreshControl!
     var alert = UIAlertController()
+    var newTableVieMode: NewsTableViewModel!
    
+  // Preptaviti da se u viewModel Injecta iz coordinatora
     
-    fileprivate let newsTableViewMode = NewsTableViewModel(newsService: NewsDataService())
+   
     
     
     override func viewDidLoad() {
@@ -39,7 +41,6 @@ class NewsTableViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         newsTableViewMode.checkForNewData()
-        //newsTableViewMode.dummyDownload()
         // Chech for new data 
         
     }
@@ -84,13 +85,15 @@ class NewsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       
         let newsViewController = NewsViewController()
         let newsPresenter = NewsViewModel()
         let selectedNews = newsTableViewMode.newsArray[indexPath.row]
         newsPresenter.newsData = selectedNews
         newsViewController.modelView = newsPresenter
         navigationController?.pushViewController(newsViewController, animated: true)
-        
+
+
     }
     
     

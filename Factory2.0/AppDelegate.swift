@@ -13,13 +13,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var navigationBarAttributes = UINavigationBar.appearance()
+    private var applicationCoordinator: AppCoordinator!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: NewsTableViewController())
+        
+        let applicationCoordinator = AppCoordinator(window: window!) 
+        self.applicationCoordinator = applicationCoordinator
+        applicationCoordinator.start()
+
+        
         navigationBarAttributes.tintColor = UIColor.white
         navigationBarAttributes.barTintColor = UIColor(red: 0, green: 0.6, blue: 0.949, alpha: 1.0)
         navigationBarAttributes.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]

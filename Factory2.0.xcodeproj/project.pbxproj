@@ -21,6 +21,12 @@
 		CF137A3420E80779002A45A6 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF137A3120E80779002A45A6 /* NewsViewController.swift */; };
 		CF137A3520E80779002A45A6 /* ErrorOccured.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF137A3220E80779002A45A6 /* ErrorOccured.swift */; };
 		CF4B6E7C20EF4DFA00DBCC7E /* NewsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4B6E7B20EF4DFA00DBCC7E /* NewsData.swift */; };
+		CFD23AC620F489CE00659729 /* NewsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD23AC520F489CE00659729 /* NewsCoordinator.swift */; };
+		CFD8C02520F3851F00063F49 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02420F3851F00063F49 /* AppCoordinator.swift */; };
+		CFD8C02720F3852B00063F49 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02620F3852B00063F49 /* Coordinator.swift */; };
+		CFD8C02A20F3965400063F49 /* NewsTableCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02920F3965400063F49 /* NewsTableCoordinator.swift */; };
+		CFD8C02D20F3A59B00063F49 /* NewsTableCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02C20F3A59B00063F49 /* NewsTableCoordinatorDelegate.swift */; };
+		CFD8C02F20F3A75F00063F49 /* CoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02E20F3A75F00063F49 /* CoordinatorDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +48,12 @@
 		CF137A3120E80779002A45A6 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		CF137A3220E80779002A45A6 /* ErrorOccured.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorOccured.swift; sourceTree = "<group>"; };
 		CF4B6E7B20EF4DFA00DBCC7E /* NewsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsData.swift; sourceTree = "<group>"; };
+		CFD23AC520F489CE00659729 /* NewsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCoordinator.swift; sourceTree = "<group>"; };
+		CFD8C02420F3851F00063F49 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		CFD8C02620F3852B00063F49 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		CFD8C02920F3965400063F49 /* NewsTableCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableCoordinator.swift; sourceTree = "<group>"; };
+		CFD8C02C20F3A59B00063F49 /* NewsTableCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		CFD8C02E20F3A75F00063F49 /* CoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +106,9 @@
 		CF137A1220E8073C002A45A6 /* Factory2.0 */ = {
 			isa = PBXGroup;
 			children = (
-				CF4B6E7E20EF505700DBCC7E /* SingleNews */,
+				CFD8C02320F384B500063F49 /* Coordinators */,
 				CF4B6E7D20EF504300DBCC7E /* ListNews */,
+				CF4B6E7E20EF505700DBCC7E /* SingleNews */,
 				CFD52C0D20EA83E7000F8F4E /* Model */,
 				CFD52C0B20EA838A000F8F4E /* Layouts */,
 				CFD52C0A20EA8368000F8F4E /* Resource */,
@@ -109,6 +122,7 @@
 		CF4B6E7D20EF504300DBCC7E /* ListNews */ = {
 			isa = PBXGroup;
 			children = (
+				CFD8C02820F3963B00063F49 /* Coordinator */,
 				CF4B6E8020EF507000DBCC7E /* View */,
 				CF4B6E7F20EF506900DBCC7E /* ModelView */,
 			);
@@ -118,6 +132,7 @@
 		CF4B6E7E20EF505700DBCC7E /* SingleNews */ = {
 			isa = PBXGroup;
 			children = (
+				CFD8C02B20F3A40600063F49 /* Coordinator */,
 				CF4B6E8220EF507A00DBCC7E /* ModelView */,
 				CF4B6E8120EF507500DBCC7E /* View */,
 			);
@@ -190,6 +205,34 @@
 				CF4B6E7B20EF4DFA00DBCC7E /* NewsData.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		CFD8C02320F384B500063F49 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				CFD8C02420F3851F00063F49 /* AppCoordinator.swift */,
+				CFD8C02620F3852B00063F49 /* Coordinator.swift */,
+				CFD8C02E20F3A75F00063F49 /* CoordinatorDelegate.swift */,
+			);
+			name = Coordinators;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		CFD8C02820F3963B00063F49 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CFD8C02920F3965400063F49 /* NewsTableCoordinator.swift */,
+				CFD8C02C20F3A59B00063F49 /* NewsTableCoordinatorDelegate.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		CFD8C02B20F3A40600063F49 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CFD23AC520F489CE00659729 /* NewsCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,13 +358,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFD8C02520F3851F00063F49 /* AppCoordinator.swift in Sources */,
+				CFD23AC620F489CE00659729 /* NewsCoordinator.swift in Sources */,
 				CF137A2D20E8076A002A45A6 /* NewsDataService.swift in Sources */,
 				CF137A3420E80779002A45A6 /* NewsViewController.swift in Sources */,
 				CF03CAD120E90C3200D7FCCF /* NewsViewModel.swift in Sources */,
+				CFD8C02D20F3A59B00063F49 /* NewsTableCoordinatorDelegate.swift in Sources */,
 				CF137A2B20E8076A002A45A6 /* NewsTableViewModel.swift in Sources */,
 				CF137A3020E8076A002A45A6 /* NewsTableViewController.swift in Sources */,
 				CF137A2E20E8076A002A45A6 /* NewsTableViewCell.swift in Sources */,
+				CFD8C02F20F3A75F00063F49 /* CoordinatorDelegate.swift in Sources */,
+				CFD8C02A20F3965400063F49 /* NewsTableCoordinator.swift in Sources */,
 				CF137A3520E80779002A45A6 /* ErrorOccured.swift in Sources */,
+				CFD8C02720F3852B00063F49 /* Coordinator.swift in Sources */,
 				CF137A2C20E8076A002A45A6 /* NewsModel.swift in Sources */,
 				CF137A1420E8073C002A45A6 /* AppDelegate.swift in Sources */,
 				CF4B6E7C20EF4DFA00DBCC7E /* NewsData.swift in Sources */,

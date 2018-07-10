@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Factory2.0/SingleNews/ModelView/NewsViewModel.swift"
+            timestampString = "552901746.780134"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "NewsViewModel"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Factory2_0.NewsViewModel.(newsView in _9A2A1A54025AC6B06E900B3DB5FD3E66).getter : Swift.Optional&lt;Factory2_0.DataView&gt;"
+                  moduleName = "Factory2.0"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/MzxzD/Desktop/FACTORY_Praksa/Factory2.0/Factory2.0/SingleNews/ModelView/NewsViewModel.swift"
+                  timestampString = "552901751.3913701"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "184">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Factory2_0.NewsViewModel.(newsView in _9A2A1A54025AC6B06E900B3DB5FD3E66).setter : Swift.Optional&lt;Factory2_0.DataView&gt;"
+                  moduleName = "Factory2.0"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/MzxzD/Desktop/FACTORY_Praksa/Factory2.0/Factory2.0/SingleNews/ModelView/NewsViewModel.swift"
+                  timestampString = "552901751.3939331"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "432">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Factory2_0.NewsViewModel.init() -&gt; Factory2_0.NewsViewModel"
+                  moduleName = "Factory2.0"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/MzxzD/Desktop/FACTORY_Praksa/Factory2.0/Factory2.0/SingleNews/ModelView/NewsViewModel.swift"
+                  timestampString = "552901751.395727"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

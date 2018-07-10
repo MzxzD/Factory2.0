@@ -7,11 +7,22 @@ class NewsTableViewModel {
     
     fileprivate let newsService:NewsDataService
     var newsArray: [NewsData] = []
+    
+    
+    
+    var sampleArray: [NewsData] =   [NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg"),
+                                     NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg"),
+                                    NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg"),
+                                    NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg"),
+                                    NewsData(title: "Test", description: "Dabu di dabu da....", urlToImage: "https://secure.i.telegraph.co.uk/multimedia/archive/03597/POTD_chick_3597497k.jpg")]
+    
+    
+    
     var timeDataHasDownloaded: Date?
     var refreshView = PublishSubject<Bool>()
     var isLoading = PublishSubject<Bool>()
     var errorOccured = PublishSubject<Bool>()
-    
+    weak var newsTableDelegate: NewsTableCoordinatorDelegate?
     
     var triggerDownload = PublishSubject<Bool>()
     
@@ -56,6 +67,8 @@ class NewsTableViewModel {
                     self.isLoading.onNext(false)
                     self.newsArray = newsArray.data
                 } else {
+                    self.newsArray = self.sampleArray
+                    self.refreshView.onNext(true)
                     self.errorOccured.onNext(true)
                     print("Error Occured")
                 }
@@ -84,5 +97,7 @@ class NewsTableViewModel {
         }
     }
     
-    
+    func pushNewsToDetail() {
+   //     self.newsTableDelegate?.openDetailNews(selectedNews: NewsData)
+    }
 }
