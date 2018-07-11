@@ -21,7 +21,7 @@ class BaseViewController: UITabBarController {
 
     func setupTabBar() {
         
-        let listNewsController = createNavController(vc: FavoriteViewController(), selected: #imageLiteral(resourceName: "video_white"), unselected: #imageLiteral(resourceName: "video_black"))
+        let listNewsController = createNavController(vc: ListNewsViewController(), selected: #imageLiteral(resourceName: "video_white"), unselected: #imageLiteral(resourceName: "video_black"))
         let favoriteController = createNavController(vc: FavoriteViewController(), selected: #imageLiteral(resourceName: "star_white"), unselected: #imageLiteral(resourceName: "star_black"))
         
         viewControllers = [listNewsController, favoriteController]

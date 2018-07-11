@@ -17,8 +17,8 @@ class ListNewsCoordinator: Coordinator {
     let controller: ListNewsViewController
     weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
     
-    init(presenter: UINavigationController) {
-        self.presenter = presenter
+    init() {
+        self.presenter = UINavigationController()
         let listNewsController = ListNewsViewController()
         let listNewsViewModel = ListNewsViewModel(newsService: APIRepository())
         listNewsController.listNewsViewModel = listNewsViewModel

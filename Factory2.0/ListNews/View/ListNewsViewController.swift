@@ -25,6 +25,8 @@ class ListNewsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Factory"
+        let newsViewModel = ListNewsViewModel(newsService: APIRepository())
+        self.listNewsViewModel = newsViewModel
         tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
         innitializeLoaderObservable()
         initializeDataObservable()
