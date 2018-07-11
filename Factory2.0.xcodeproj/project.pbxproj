@@ -21,6 +21,9 @@
 		CF137A3420E80779002A45A6 /* SingleNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF137A3120E80779002A45A6 /* SingleNewsViewController.swift */; };
 		CF137A3520E80779002A45A6 /* ErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF137A3220E80779002A45A6 /* ErrorController.swift */; };
 		CF4B6E7C20EF4DFA00DBCC7E /* NewsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4B6E7B20EF4DFA00DBCC7E /* NewsData.swift */; };
+		CFC6577020F61CA200AA7AE1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6576F20F61CA200AA7AE1 /* BaseViewController.swift */; };
+		CFC6577A20F626F600AA7AE1 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6577920F626F600AA7AE1 /* FavoriteViewController.swift */; };
+		CFC6577C20F627C400AA7AE1 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6577B20F627C400AA7AE1 /* BaseCoordinator.swift */; };
 		CFD23AC620F489CE00659729 /* SingleNewsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD23AC520F489CE00659729 /* SingleNewsCoordinator.swift */; };
 		CFD8C02520F3851F00063F49 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02420F3851F00063F49 /* AppCoordinator.swift */; };
 		CFD8C02720F3852B00063F49 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02620F3852B00063F49 /* Coordinator.swift */; };
@@ -49,6 +52,9 @@
 		CF137A3120E80779002A45A6 /* SingleNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleNewsViewController.swift; sourceTree = "<group>"; };
 		CF137A3220E80779002A45A6 /* ErrorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorController.swift; sourceTree = "<group>"; };
 		CF4B6E7B20EF4DFA00DBCC7E /* NewsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsData.swift; sourceTree = "<group>"; };
+		CFC6576F20F61CA200AA7AE1 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		CFC6577920F626F600AA7AE1 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		CFC6577B20F627C400AA7AE1 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		CFD23AC520F489CE00659729 /* SingleNewsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleNewsCoordinator.swift; sourceTree = "<group>"; };
 		CFD8C02420F3851F00063F49 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		CFD8C02620F3852B00063F49 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -108,7 +114,10 @@
 		CF137A1220E8073C002A45A6 /* Factory2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				CFC6577820F61D9600AA7AE1 /* NewsCell */,
 				CFD8C02320F384B500063F49 /* Coordinators */,
+				CFC6576E20F61C8E00AA7AE1 /* Base */,
+				CFC6577420F61D5700AA7AE1 /* FavoriteNews */,
 				CF4B6E7D20EF504300DBCC7E /* ListNews */,
 				CF4B6E7E20EF505700DBCC7E /* SingleNews */,
 				CFD52C0D20EA83E7000F8F4E /* Model */,
@@ -153,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				CF137A2A20E8076A002A45A6 /* ListNewsViewController.swift */,
-				CF137A2820E8076A002A45A6 /* ListNewsViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -172,6 +180,79 @@
 				CF03CAD020E90C3200D7FCCF /* SingleNewsViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CFC6576E20F61C8E00AA7AE1 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				CFC6577120F61D0C00AA7AE1 /* Coordinator */,
+				CFC6577220F61D1500AA7AE1 /* View */,
+				CFC6577320F61D2D00AA7AE1 /* ViewModel */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		CFC6577120F61D0C00AA7AE1 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CFC6577B20F627C400AA7AE1 /* BaseCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		CFC6577220F61D1500AA7AE1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CFC6576F20F61CA200AA7AE1 /* BaseViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CFC6577320F61D2D00AA7AE1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CFC6577420F61D5700AA7AE1 /* FavoriteNews */ = {
+			isa = PBXGroup;
+			children = (
+				CFC6577720F61D8100AA7AE1 /* ViewModel */,
+				CFC6577620F61D7B00AA7AE1 /* Controller */,
+				CFC6577520F61D7400AA7AE1 /* View */,
+			);
+			path = FavoriteNews;
+			sourceTree = "<group>";
+		};
+		CFC6577520F61D7400AA7AE1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CFC6577920F626F600AA7AE1 /* FavoriteViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CFC6577620F61D7B00AA7AE1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		CFC6577720F61D8100AA7AE1 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		CFC6577820F61D9600AA7AE1 /* NewsCell */ = {
+			isa = PBXGroup;
+			children = (
+				CF137A2820E8076A002A45A6 /* ListNewsViewCell.swift */,
+			);
+			path = NewsCell;
 			sourceTree = "<group>";
 		};
 		CFD52C0A20EA8368000F8F4E /* Resource */ = {
@@ -317,6 +398,8 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Factory2.0/Pods-Factory2.0-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
@@ -326,6 +409,8 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
@@ -366,6 +451,7 @@
 				CF137A2D20E8076A002A45A6 /* APIRepository.swift in Sources */,
 				CF137A3420E80779002A45A6 /* SingleNewsViewController.swift in Sources */,
 				CF03CAD120E90C3200D7FCCF /* SingleNewsViewModel.swift in Sources */,
+				CFC6577020F61CA200AA7AE1 /* BaseViewController.swift in Sources */,
 				CFD8C02D20F3A59B00063F49 /* ListNewsCoordinatorDelegate.swift in Sources */,
 				CF137A2B20E8076A002A45A6 /* ListNewsViewModel.swift in Sources */,
 				CF137A3020E8076A002A45A6 /* ListNewsViewController.swift in Sources */,
@@ -374,6 +460,8 @@
 				CFD8C02A20F3965400063F49 /* ListNewsCoordinator.swift in Sources */,
 				CF137A3520E80779002A45A6 /* ErrorController.swift in Sources */,
 				CFF07DD420F551150049315D /* DataAndErrorWrapper.swift in Sources */,
+				CFC6577A20F626F600AA7AE1 /* FavoriteViewController.swift in Sources */,
+				CFC6577C20F627C400AA7AE1 /* BaseCoordinator.swift in Sources */,
 				CFD8C02720F3852B00063F49 /* Coordinator.swift in Sources */,
 				CF137A2C20E8076A002A45A6 /* JSONModel.swift in Sources */,
 				CF137A1420E8073C002A45A6 /* AppDelegate.swift in Sources */,

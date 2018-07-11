@@ -37,7 +37,7 @@ class ListNewsViewModel {
                 print("wrappedArticle into WrappedNews")
                 return WrapperData<NewsData>(data:wrapperArticleData.data.map({ (article) -> NewsData in
                    // print("WrappedNews.data save NewsData")
-                    return NewsData(title: article.title, description: article.description, urlToImage: article.urlToImage)
+                    return                                                                                     NewsData(title: article.title, description: article.description, urlToImage: article.urlToImage)
                 }), errorMessage: wrapperArticleData.errorMessage )
             })
 

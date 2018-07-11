@@ -9,5 +9,6 @@ target 'Factory2.0' do
     pod 'RxSwift',    '~> 4.0'
     pod 'RxCocoa',    '~> 4.0'
     pod 'RxAlamofire'
+    pod 'RealmSwift'
 end
 
