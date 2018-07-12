@@ -17,8 +17,8 @@ class ListNewsCoordinator: Coordinator {
     let controller: ListNewsViewController
     weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
     
-    init() {
-        self.presenter = UINavigationController()
+    init(presenter : UINavigationController) {
+        self.presenter = presenter
         let listNewsController = ListNewsViewController()
         let listNewsViewModel = ListNewsViewModel(newsService: APIRepository())
         listNewsController.listNewsViewModel = listNewsViewModel
@@ -29,7 +29,7 @@ class ListNewsCoordinator: Coordinator {
     func start() {
         print("Coordinator is beaing used")
         controller.listNewsViewModel.listNewsCoordinatorDelegate = self
-        //presenter.present(controller, animated: true)
+       // presenter.present(controller, animated: true)
     }
     
     deinit {
@@ -44,6 +44,7 @@ extension ListNewsCoordinator: ListNewsCoordinatorDelegate {
     
     
     func openSingleNews(selectedNews: NewsData) {
+        print("openSingleNewsInitiated")
         let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
         newsDetailCoordinator.start()
         self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
@@ -54,7 +55,6 @@ extension ListNewsCoordinator: ListNewsCoordinatorDelegate {
     func viewControllerHasFinished() {
         self.childCoordinator.removeAll()
         parentCoordinatorDelegate?.childHasFinished(coordinator: self)
-     //   self.removeChildCoordinator(childCoordinator: self)
     }
     
 }

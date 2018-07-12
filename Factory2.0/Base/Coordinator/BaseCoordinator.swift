@@ -22,7 +22,11 @@ class BaseCoordinator: Coordinator {
         let baseViewController = BaseViewController()
 //        let listNewsViewModel = ListNewsViewModel(newsService: APIRepository())
 //        baseViewController.listNewsViewModel = listNewsViewModel
+        
+        let listNewsViewCoordinator = ListNewsCoordinator(presenter: presenter)
         self.controller = baseViewController
+        self.controller.setViewControllers([listNewsViewCoordinator.controller], animated: false)
+        listNewsViewCoordinator.start()
         
     }
     

@@ -49,10 +49,10 @@ class SingleNewsViewController: UIViewController  {
     }
     override func viewDidDisappear(_ animated: Bool) {
         print("View Dissapeared")
-    //    if(self.isMovingFromParentViewController){
-    //        print("IT is moving to parent coordinator")
+        if(self.isMovingFromParentViewController){
+            print("IT is moving to parent coordinator")
             singleNewsViewModel.listNewsCoordinatorDelegate?.viewControllerHasFinished()
-        
+        }
     }
     
     func addSubViews() {
@@ -97,12 +97,6 @@ class SingleNewsViewController: UIViewController  {
     }
     // Deinitialization of the ViewContoller
     deinit {
-        singleNewsViewModel.listNewsCoordinatorDelegate = nil
-        singleNewsViewModel = nil
-        newsImage.image = nil
-        navigationItem.title = nil
-        newsTitle.text = nil
-        newsDescription.text = nil
         print("View has been deinnitialized...")
     }
     

@@ -24,9 +24,6 @@ class ListNewsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Factory"
-        let newsViewModel = ListNewsViewModel(newsService: APIRepository())
-        self.listNewsViewModel = newsViewModel
         tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
         innitializeLoaderObservable()
         initializeDataObservable()
@@ -44,12 +41,12 @@ class ListNewsViewController: UITableViewController {
     }
     
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-       // if self.isMovingToParentViewController {
-            listNewsViewModel.listNewsCoordinatorDelegate?.viewControllerHasFinished()
-       // }
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//        if self.isMovingFromParentViewController {
+//            listNewsViewModel.listNewsCoordinatorDelegate?.viewControllerHasFinished()
+//        }
+//    }
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {

@@ -11,7 +11,7 @@ class ListNewsViewModel {
     var dataIsReady = PublishSubject<Bool>()
     var loaderControll = PublishSubject<Bool>()
     var errorOccured = PublishSubject<Bool>()
-    weak var listNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
+     var listNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
     var downloadTrigger = PublishSubject<Bool>()
     
     init(newsService:APIRepository) {

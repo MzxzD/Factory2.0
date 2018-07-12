@@ -26,6 +26,7 @@ class SingleNewsCoordinator: Coordinator {
     
     
     func start() {
+        print("StartToSingleNews")
         presenter.pushViewController(singleNewsController, animated: true)
     }
     
@@ -40,6 +41,7 @@ extension SingleNewsCoordinator: ListNewsCoordinatorDelegate{
     }
     
     func viewControllerHasFinished() {
+        print("ViewControllerHasFinished")
         childCoordinator.removeAll()
         parentCoordinatorDelegate?.childHasFinished(coordinator: self)
     }

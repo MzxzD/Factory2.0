@@ -14,8 +14,8 @@ class BaseViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBar.barTintColor = UIColor.blue
-        setupTabBar()
+        tabBar.barTintColor = UIColor(red: 0, green: 0.6, blue: 0.949, alpha: 1.0)
+      //  setupTabBar()
          navigationItem.title = "Factory"
     }
 
