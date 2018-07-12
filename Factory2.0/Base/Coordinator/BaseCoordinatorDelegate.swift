@@ -9,8 +9,6 @@
 import UIKit
 
 protocol BaseCoordinatorDelegate: class {
-    func initData(){
-        
-    }
+    func initData()
     
 }

@@ -44,13 +44,13 @@ class BaseCoordinator: Coordinator {
     
 }
 
-extension BaseCoordinator: BaseCoordinatorDelegate{
-   // func initData(viewModel: ) {
-        let viewModel = ListNewsViewModel(newsService: APIRepository())
-    }
-    
-    
-}
+//extension BaseCoordinator: BaseCoordinatorDelegate{
+//   // func initData(viewModel: ) {
+//        let viewModel = ListNewsViewModel(newsService: APIRepository())
+//    }
+//    
+//    
+//}
 
 //extension BaseCoordinator: ListNewsCoordinatorDelegate {
 //    
