@@ -10,19 +10,27 @@ import Foundation
 import Realm
 import RealmSwift
 
-class RealmSevice {
+class RealmSerivce {
     
-    private  let database:Realm
-//    static let
+    var realm = try! Realm()
     
-    
-    init() {
-        database = try! Realm()
+    func create<T: Object>(object: T) {
+        do {
+            try realm.write {
+                realm.add(object)
+            }
+        } catch let error{
+            print(error.localizedDescription)
+        }
     }
     
-    
-//    func getFavoritesFromDB() -> [NewsData] {
-////        let results:  [NewsData]  = database.objects(<#T##type: Element.Type##Element.Type#>)
-//    }
-    
+    func delete<T: Object>(object: T){
+        do{
+            try realm.write {
+                realm.delete(object)
+            }
+        }catch let error {
+            print(error.localizedDescription)
+        }
+    }
 }
