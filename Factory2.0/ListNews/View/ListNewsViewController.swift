@@ -12,7 +12,9 @@ import AlamofireImage
 import RxSwift
 
 
-class ListNewsViewController: UITableViewController {
+class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
+
+    
     
     let cellIdentifier = "ListNewsViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
@@ -41,12 +43,12 @@ class ListNewsViewController: UITableViewController {
     }
     
     
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        if self.isMovingFromParentViewController {
-//            listNewsViewModel.listNewsCoordinatorDelegate?.viewControllerHasFinished()
-//        }
-//    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if self.isMovingFromParentViewController {
+            listNewsViewModel.listNewsCoordinatorDelegate?.viewControllerHasFinished()
+        }
+    }
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,16 +72,22 @@ class ListNewsViewController: UITableViewController {
         }
         let newsViewData = listNewsViewModel.newsData[indexPath.row]
         
-        cell.newsTitle.text = newsViewData.title
-        Alamofire.request(URL (string: (newsViewData.urlToImage))!).responseImage
+        cell.newsTitleLabel.text = newsViewData.title
+        Alamofire.request(URL (string: (newsViewData.urlToImage)!)!).responseImage
             {
                 response in
                 if let image = response.result.value
                 {
-                    cell.newsImage.image = image
+                    cell.newsImageView .image = image
                 }
         }
+        cell.cellDelegate = self
         return  cell
+    }
+    
+    func didPressButton(_ sender: ListNewsViewCell) {
+        guard let tappedIndexPath = tableView.indexPath(for: sender) else { return }
+        print("tapped!")
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

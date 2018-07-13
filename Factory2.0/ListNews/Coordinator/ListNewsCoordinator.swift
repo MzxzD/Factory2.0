@@ -28,8 +28,7 @@ class ListNewsCoordinator: Coordinator {
     
     func start() {
         print("Coordinator is beaing used")
-        controller.listNewsViewModel.listNewsCoordinatorDelegate = self
-       // presenter.present(controller, animated: true)
+        presenter.present(controller, animated: true)
     }
     
     deinit {

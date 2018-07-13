@@ -25,9 +25,9 @@ class SingleNewsViewController: UIViewController  {
     var newsTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "AvenirNext-Bold", size: 23)
+        label.font = UIFont(name: "AvenirNext-Bold", size: 20)
         label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         return label
     }()
     
@@ -58,27 +58,29 @@ class SingleNewsViewController: UIViewController  {
     func addSubViews() {
         
         view.addSubview(newsImage)
-        Alamofire.request(URL (string: singleNewsViewModel.newsData.urlToImage)!).responseImage
+        Alamofire.request(URL (string: singleNewsViewModel.newsData.urlToImage!)!).responseImage
             {
                 response in
                 if let image = response.result.value
                 {
                     self.newsImage.image = image
+                    
                 }
         }
         
         
         newsImage.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         newsImage.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        newsImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 25).isActive = true
-        newsImage.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        newsImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 55).isActive = true
+        newsImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         view.addSubview(newsTitle)
         newsTitle.text = nil
         newsTitle.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
         newsTitle.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
         newsTitle.topAnchor.constraint(equalTo: newsImage.bottomAnchor, constant: 8).isActive = true
-        newsTitle.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 305) .isActive = true
+//        newsTitle.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 305) .isActive = true
+        newsTitle.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         
         view.addSubview(newsDescription)
@@ -90,13 +92,14 @@ class SingleNewsViewController: UIViewController  {
         
         navigationItem.title = singleNewsViewModel.newsData?.title
         newsTitle.text = singleNewsViewModel.newsData?.title
-        newsDescription.text = singleNewsViewModel.newsData?.description
+        newsDescription.text = singleNewsViewModel.newsData?.descriptionNews
         
         
         
     }
     // Deinitialization of the ViewContoller
     deinit {
+
         print("View has been deinnitialized...")
     }
     

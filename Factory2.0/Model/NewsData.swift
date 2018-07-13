@@ -1,8 +1,12 @@
 
-struct NewsData {
+import Realm
+import RealmSwift
+
+class NewsData: Object {
     
-    let title: String
-    let description: String
-    let urlToImage: String
-    
+    @objc dynamic var title: String? = ""
+    @objc dynamic var descriptionNews: String? = ""
+    @objc dynamic var urlToImage: String? = ""
+    @objc dynamic var isItFavourite: Bool = false
+
 }

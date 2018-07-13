@@ -20,23 +20,21 @@ class BaseCoordinator: Coordinator {
     init(presenter: UINavigationController) {
         self.presenter = presenter
         let baseViewController = BaseViewController()
-//        let listNewsViewModel = ListNewsViewModel(newsService: APIRepository())
-//        baseViewController.listNewsViewModel = listNewsViewModel
-        
-        let listNewsViewCoordinator = ListNewsCoordinator(presenter: presenter)
         self.controller = baseViewController
-        self.controller.setViewControllers([listNewsViewCoordinator.controller], animated: false)
-        listNewsViewCoordinator.start()
         
+        let favoriteNewsCoordinator = FavoriteNewsCoordinator(presenter: presenter)
+        let favouriteNewsNavigationController = createNavigationController(viewController: favoriteNewsCoordinator.controller, name: "FAVOURITE LIST", unselectedImage: "star_black", selectedImage: "star_white")
+     //   presenter.navigationItem.title = favouriteNewsNavigationController.tabBarItem.title
+        
+        let listNewsCoordinator = ListNewsCoordinator(presenter: presenter)
+        let listNewsNavigationController = createNavigationController(viewController: listNewsCoordinator.controller, name: "LIST NEWS", unselectedImage: "video_black", selectedImage: "video_white")
+        
+        self.controller.setViewControllers([listNewsNavigationController, favouriteNewsNavigationController], animated: false)
+        listNewsCoordinator.controller.listNewsViewModel.listNewsCoordinatorDelegate = listNewsCoordinator
     }
     
     func start() {
         print("Coordinator is beaing used")
-     //   controller.listNewsViewModel.listNewsCoordinatorDelegate = self
-//        let coordinator = ListNewsCoordinator(presenter: self.presenter)
-//        coordinator.start()
-//        self.addChildCoordinator(childCoordinator: coordinator)
-//        print(self.childCoordinator)
         presenter.pushViewController(controller, animated: true)
     }
     
@@ -44,42 +42,18 @@ class BaseCoordinator: Coordinator {
         print("LstNewsCoorinatorDeinitialised!")
     }
     
-    
+    func createNavigationController(viewController: UIViewController ,name: String, unselectedImage: String, selectedImage: String ) -> UINavigationController{
+        let newNavigationController = UINavigationController(rootViewController: viewController)
+        newNavigationController.tabBarItem.title = name
+        newNavigationController.tabBarItem.image = UIImage(named: unselectedImage)
+        newNavigationController.tabBarItem.selectedImage =  UIImage(named: selectedImage )
+        newNavigationController.navigationItem.title = name
+        return newNavigationController
+    }
     
 }
 
-//extension BaseCoordinator: BaseCoordinatorDelegate{
-//   // func initData(viewModel: ) {
-//        let viewModel = ListNewsViewModel(newsService: APIRepository())
-//    }
-//    
-//    
-//}
 
-//extension BaseCoordinator: ListNewsCoordinatorDelegate {
-//    
-//    
-//    
-//    func openSingleNews(selectedNews: NewsData) {
-//        let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
-//        newsDetailCoordinator.start()
-//        self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
-//        print(self.childCoordinator)
-//        
-//    }
-//    
-//    func viewControllerHasFinished() {
-//        self.childCoordinator.removeAll()
-//        parentCoordinatorDelegate?.childHasFinished(coordinator: self)
-//        //   self.removeChildCoordinator(childCoordinator: self)
-//    }
-//    
-//}
-//
-//extension BaseCoordinator: ParentCoordinatorDelegate{
-//    func childHasFinished(coordinator: Coordinator) {
-//        removeChildCoordinator(childCoordinator: coordinator)
-//    }
-//    
-//}
+
+
 

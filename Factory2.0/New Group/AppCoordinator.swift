@@ -17,11 +17,8 @@ class AppCoordinator: Coordinator{
     
     init(window: UIWindow) {
         self.window = window
-       
-    
     }
     
-
     func start() {
         window.rootViewController = presenter
         window.makeKeyAndVisible()
@@ -29,10 +26,8 @@ class AppCoordinator: Coordinator{
         coordinator.start()
         self.addChildCoordinator(childCoordinator: coordinator)
         print(self.childCoordinator)
-                
-        
     }
-
+    
 }
 
 

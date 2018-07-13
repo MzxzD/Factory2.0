@@ -11,7 +11,7 @@ import Alamofire
 import AlamofireImage
 import RxSwift
 
-class FavoriteViewController: UITableViewController {
+class FavoriteNewsViewController: UITableViewController {
 
 
     

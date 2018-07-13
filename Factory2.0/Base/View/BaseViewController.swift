@@ -14,32 +14,9 @@ class BaseViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBar.barTintColor = UIColor(red: 0, green: 0.6, blue: 0.949, alpha: 1.0)
-      //  setupTabBar()
-         navigationItem.title = "Factory"
+        tabBar.barTintColor = UIColor.white
+        navigationItem.title = "Factory"
     }
 
-    func setupTabBar() {
-        
-        let listNewsController = createNavController(vc: ListNewsViewController(), selected: #imageLiteral(resourceName: "video_white"), unselected: #imageLiteral(resourceName: "video_black"))
-        let favoriteController = createNavController(vc: FavoriteViewController(), selected: #imageLiteral(resourceName: "star_white"), unselected: #imageLiteral(resourceName: "star_black"))
-        
-        viewControllers = [listNewsController, favoriteController]
-        
-        guard let items = tabBar.items else { return }
-        
-        for item in items {
-            item.imageInsets = UIEdgeInsetsMake(4, 0, -4, 0)
-        }
-    }
 }
-extension UITabBarController {
-    
-    func createNavController(vc: UIViewController, selected: UIImage, unselected: UIImage) -> UINavigationController {
-        let viewController = vc
-        let navController = UINavigationController(rootViewController: viewController)
-        navController.tabBarItem.image = unselected
-        navController.tabBarItem.selectedImage = selected
-        return navController
-    }
-}
+
