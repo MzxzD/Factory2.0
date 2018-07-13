@@ -82,4 +82,18 @@ class ListNewsViewModel {
         print("PushToDetail function initiated")
         self.listNewsCoordinatorDelegate?.openSingleNews(selectedNews: newsData[selectedNews])
     }
+    
+    func favoriteButtonPressed(selectedNews: Int){
+        print("Favorite this news")
+        let savingData = newsData[selectedNews]
+    
+        if savingData.isItFavourite {
+            print("remove from database")
+            savingData.isItFavourite = false
+        } else {
+            print("add to database")
+            savingData.isItFavourite = true
+        }
+    }
+    
 }

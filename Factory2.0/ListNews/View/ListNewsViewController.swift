@@ -87,7 +87,9 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     func didPressButton(_ sender: ListNewsViewCell) {
         guard let tappedIndexPath = tableView.indexPath(for: sender) else { return }
-        print("tapped!")
+        print("tapped! index!")
+        print(tappedIndexPath)
+        listNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -95,13 +97,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
-//        let newsViewController = NewsViewController()
-//        let newsPresenter = NewsViewModel()
-//        let selectedNews = newTableVieMode.newsArray[indexPath.row]
-//        newsPresenter.newsData = selectedNews
-//        newsViewController.modelView = newsPresenter
-//        navigationController?.pushViewController(newsViewController, animated: true)
 
         listNewsViewModel.newsSelected(selectedNews: indexPath.row)
     }

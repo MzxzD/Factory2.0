@@ -38,7 +38,7 @@ class ListNewsViewCell: UITableViewCell {
         button.setBackgroundImage(#imageLiteral(resourceName: "star_black"), for: .normal)
         button.setBackgroundImage(#imageLiteral(resourceName: "favorite"), for: .selected )
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(favTapped) , for: .touchUpInside)
+       
 
         return button
     }()
@@ -72,10 +72,13 @@ class ListNewsViewCell: UITableViewCell {
         favoriteButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         favoriteButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15).isActive = true
         favoriteButton.centerYAnchor.constraint(equalTo: newsImageView.centerYAnchor).isActive = true
+        
 
         newsTitleLabel.leftAnchor.constraint(equalTo: newsImageView.rightAnchor, constant: 8).isActive = true
         newsTitleLabel.rightAnchor.constraint(equalTo: favoriteButton.leftAnchor).isActive = true
         newsTitleLabel.centerYAnchor.constraint(equalTo: newsImageView.centerYAnchor).isActive = true
+        
+        favoriteButton.addTarget(self, action: #selector(favTapped(sender:)) , for: .touchUpInside)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -83,7 +86,7 @@ class ListNewsViewCell: UITableViewCell {
     }
 
     
-   @objc func favTapped(_ sender: UIButton!) {
+   @objc func favTapped(sender: UIButton) {
     print("fabTappedInitiated")
         cellDelegate?.didPressButton(self)
     }
