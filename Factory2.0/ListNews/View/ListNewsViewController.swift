@@ -22,6 +22,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     var refresher: UIRefreshControl!
     var alert = UIAlertController()
     var listNewsViewModel: ListNewsViewModel!
+    var selectedCell: ListNewsViewCell!
    
     
     override func viewDidLoad() {
@@ -82,6 +83,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                 }
         }
         cell.cellDelegate = self
+        
         return  cell
     }
     
@@ -89,7 +91,9 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
         guard let tappedIndexPath = tableView.indexPath(for: sender) else { return }
         print("tapped! index!")
         print(tappedIndexPath)
-        listNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
+   
+         listNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

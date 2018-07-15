@@ -72,7 +72,7 @@ class SingleNewsViewController: UIViewController  {
         newsImage.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         newsImage.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         newsImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 55).isActive = true
-        newsImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
+       newsImage.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         view.addSubview(newsTitle)
         newsTitle.text = nil

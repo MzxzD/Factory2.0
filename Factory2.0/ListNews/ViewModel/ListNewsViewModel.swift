@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import RxSwift
+import RealmSwift
 
 
 class ListNewsViewModel {
@@ -13,6 +14,8 @@ class ListNewsViewModel {
     var errorOccured = PublishSubject<Bool>()
      var listNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
     var downloadTrigger = PublishSubject<Bool>()
+    var realmServise: RealmSerivce!
+    var result: Results<NewsData>!
     
     init(newsService:APIRepository) {
         self.newsService = newsService
@@ -75,6 +78,7 @@ class ListNewsViewModel {
         } else {
             print("5minutes has passed, downloading anew.")
             self.downloadTrigger.onNext(true)
+            successDownloadTime = currentTime
         }
     }
 
@@ -86,14 +90,21 @@ class ListNewsViewModel {
     func favoriteButtonPressed(selectedNews: Int){
         print("Favorite this news")
         let savingData = newsData[selectedNews]
-    
+        self.realmServise = RealmSerivce()
+        self.result = self.realmServise.realm.objects(NewsData.self)
+        
         if savingData.isItFavourite {
-            print("remove from database")
             savingData.isItFavourite = false
+            self.realmServise.delete(object: savingData)
+            
         } else {
             print("add to database")
             savingData.isItFavourite = true
+            self.realmServise.create(object: savingData)
+            
         }
+        
+//        print(self.result)
     }
     
 }

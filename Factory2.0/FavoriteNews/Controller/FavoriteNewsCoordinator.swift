@@ -24,14 +24,34 @@ class FavoriteNewsCoordinator: Coordinator {
     
     
     func start() {
-        
+        presenter.present(controller, animated: true)
     }
     
     
 }
+
+extension FavoriteNewsCoordinator: ListNewsCoordinatorDelegate {
+    
+    func openSingleNews(selectedNews: NewsData) {
+        print("openSingleNewsInitiated")
+        let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
+        newsDetailCoordinator.start()
+        self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
+        print(self.childCoordinator)
+    }
+    
+    func viewControllerHasFinished() {
+        self.childCoordinator.removeAll()
+        parentCoordinatorDelegate?.childHasFinished(coordinator: self)
+    }
+    
+    
+}
+
 
 extension FavoriteNewsCoordinator: ParentCoordinatorDelegate{
     func childHasFinished(coordinator: Coordinator) {
         removeChildCoordinator(childCoordinator: coordinator)
     }
 }
+
