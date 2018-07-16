@@ -10,6 +10,14 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
+
+/* TO DO:
+ 
+            Implementirari FavButton
+            Spojiti logiku za dodavanje/brisanje Favorites
+ 
+ */
+
 class SingleNewsViewController: UIViewController  {
     
     // MARK: variables
