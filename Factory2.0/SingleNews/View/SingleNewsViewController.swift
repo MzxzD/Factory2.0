@@ -22,6 +22,8 @@ class SingleNewsViewController: UIViewController  {
     
     // MARK: variables
     var singleNewsViewModel: SingleNewsViewModel!
+    var favoritesBarButtonOn: UIBarButtonItem! = nil
+    var favoritesBarButtonOFF: UIBarButtonItem! = nil
     
     var newsImage: UIImageView = {
         let imageView = UIImageView()
@@ -102,9 +104,45 @@ class SingleNewsViewController: UIViewController  {
         newsTitle.text = singleNewsViewModel.newsData?.title
         newsDescription.text = singleNewsViewModel.newsData?.descriptionNews
         
+        self.favoritesBarButtonOn = UIBarButtonItem(image: #imageLiteral(resourceName: "favorite"), style: .plain, target: self, action: #selector(didTapFavoritesBarButtonOn))
+        self.favoritesBarButtonOFF = UIBarButtonItem(image: #imageLiteral(resourceName: "star_black"), style: .plain, target: self, action: #selector(didTapFavoritesBarButtonOFF))
         
+        if singleNewsViewModel.newsData?.isItFavourite == true {
+            
+            navigationItem.setRightBarButtonItems([favoritesBarButtonOn], animated: true)
+        }else{
+
+            navigationItem.setRightBarButtonItems([favoritesBarButtonOFF], animated: true)
+        }
         
     }
+    
+    
+    @objc  func didTapFavoritesBarButtonOn() {
+        // TO DO:
+                    /*
+                        Napraviti način da izbrišem sa Favorita
+         
+         
+         
+                        */
+        navigationItem.setRightBarButtonItems([favoritesBarButtonOFF], animated: true)
+        print("Goes off the Fav")
+    }
+    
+    @objc func didTapFavoritesBarButtonOFF() {
+        // TO DO:
+        /*
+         Napraviti način da dodam u Favorite
+         
+         
+         
+         */
+        navigationItem.setRightBarButtonItems([favoritesBarButtonOn], animated: true)
+        print("On it goes!")
+    }
+
+    
     // Deinitialization of the ViewContoller
     deinit {
 

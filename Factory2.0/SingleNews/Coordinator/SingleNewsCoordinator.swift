@@ -11,27 +11,25 @@ import UIKit
 class SingleNewsCoordinator: Coordinator {
     
     var childCoordinator: [Coordinator] = []
-    var favoriteButton : UIButton = {
-        var button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "star_black"), for: .normal)
-        button.setBackgroundImage(#imageLiteral(resourceName: "favorite"), for: .selected )
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-//    let favoriteBarButton = UIBarButtonItem(customView: favoriteButton)
-    
     var presenter: UINavigationController
     private let singleNewsController: SingleNewsViewController
     weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
+    let favoriteButtonAppearence = UIBarButtonItem.appearance()
+
+    
+    
     
     init(presenter: UINavigationController, news: NewsData) {
         self.presenter = presenter
-       
         let singleNewsController = SingleNewsViewController()
         let singleNewsViewModel = SingleNewsViewModel()
         singleNewsController.singleNewsViewModel = singleNewsViewModel
         self.singleNewsController = singleNewsController
         singleNewsViewModel.newsData = news
+        
+        
+
+        
     }
     
     
