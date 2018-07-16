@@ -13,13 +13,18 @@ import RxSwift
 import RealmSwift
 import Realm
 
+
+/* TO DO:
+            Naraviti reload kako treba
+            Error ukoliko je prazan
+            implementirati favbutton kako treba
+            spojiti logiku za brisanje iz FavView-a
+            omogućiti prijelaz sa FavView na SingleView
+ 
+ */
 class FavoriteNewsViewController: UITableViewController {
     
     let cellIdentifier = "ListNewsViewCell"
-    //let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
-   // let disposeBag = DisposeBag()
-//    var refresher: UIRefreshControl!
-//    var alert = UIAlertController()
     var favoriteListNewsViewModel: FavoritenewsViewModel!
     var selectedCell: ListNewsViewCell!
     
@@ -76,6 +81,10 @@ class FavoriteNewsViewController: UITableViewController {
                 {
                     cell.newsImageView .image = image
                 }
+        }
+        
+        if newsViewData.isItFavourite {
+            cell.favoriteButton.isSelected = true
         }
         
         return  cell

@@ -83,6 +83,9 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                 }
         }
         cell.cellDelegate = self
+        if newsViewData.isItFavourite {
+            cell.favoriteButton.isSelected = true
+        }
         
         return  cell
     }
@@ -93,7 +96,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
         print(tappedIndexPath)
    
          listNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
-        
+        tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

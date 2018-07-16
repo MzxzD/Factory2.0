@@ -15,11 +15,15 @@ class FavoritenewsViewModel {
     var favoriteNews: Results<NewsData>!
     var favoriteistNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
     
-   @objc func getFavoriteNews() {
+    @objc func getFavoriteNews() {
         self.realmServise = RealmSerivce()
         self.favoriteNews = self.realmServise.realm.objects(NewsData.self)
-        for element in self.favoriteNews {
-            favoriteNewsData += [element]
+        if favoriteNews.count != 0 {
+            for element in self.favoriteNews {
+                favoriteNewsData += [element]
+            }
+        } else {
+            errorOccured(value: "No Favorites has been added")
         }
     }
     

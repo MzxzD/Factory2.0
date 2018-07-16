@@ -27,7 +27,6 @@ class FavoriteNewsCoordinator: Coordinator {
         presenter.present(controller, animated: true)
     }
     
-    
 }
 
 extension FavoriteNewsCoordinator: ListNewsCoordinatorDelegate {
@@ -47,7 +46,6 @@ extension FavoriteNewsCoordinator: ListNewsCoordinatorDelegate {
     
     
 }
-
 
 extension FavoriteNewsCoordinator: ParentCoordinatorDelegate{
     func childHasFinished(coordinator: Coordinator) {
