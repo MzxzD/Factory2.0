@@ -16,9 +16,10 @@ class RealmSerivce {
     var realm = try! Realm()
     var realmServiceIsDone = PublishSubject<Bool>()
     
-    func create<T : Object>(object: T) {
+    func create<T : NewsData>(object: T) {
         do {
             try realm.write {
+                object.isItFavourite = true
                 realm.add(object)
                 
             }
@@ -29,10 +30,12 @@ class RealmSerivce {
         self.realmServiceIsDone.onNext(true)
     }
     
-    func delete<T: Object>(object: T){
+    func delete<T: NewsData>(object: T){
         do{
             try realm.write {
+               // object.isItFavourite = false
                 realm.delete(object)
+               // realm.refresh()
             }
         }catch let error {
             print(error.localizedDescription)

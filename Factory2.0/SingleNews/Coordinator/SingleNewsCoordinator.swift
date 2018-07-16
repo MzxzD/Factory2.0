@@ -11,12 +11,22 @@ import UIKit
 class SingleNewsCoordinator: Coordinator {
     
     var childCoordinator: [Coordinator] = []
+    var favoriteButton : UIButton = {
+        var button = UIButton()
+        button.setBackgroundImage(#imageLiteral(resourceName: "star_black"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "favorite"), for: .selected )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+//    let favoriteBarButton = UIBarButtonItem(customView: favoriteButton)
+    
     var presenter: UINavigationController
     private let singleNewsController: SingleNewsViewController
     weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
     
     init(presenter: UINavigationController, news: NewsData) {
         self.presenter = presenter
+       
         let singleNewsController = SingleNewsViewController()
         let singleNewsViewModel = SingleNewsViewModel()
         singleNewsController.singleNewsViewModel = singleNewsViewModel
@@ -28,6 +38,10 @@ class SingleNewsCoordinator: Coordinator {
     func start() {
         print("StartToSingleNews")
         presenter.pushViewController(singleNewsController, animated: true)
+    }
+    
+   @objc func favButtonTapped(){
+        print("Tapped!")
     }
     
     deinit {

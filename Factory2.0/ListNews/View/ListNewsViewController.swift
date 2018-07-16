@@ -22,7 +22,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     var refresher: UIRefreshControl!
     var alert = UIAlertController()
     var listNewsViewModel: ListNewsViewModel!
-    var selectedCell: ListNewsViewCell!
+//    var selectedCell: ListNewsViewCell!
    
     
     override func viewDidLoad() {
@@ -34,10 +34,12 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
         listNewsViewModel.initializeObservableDataAPI().disposed(by: disposeBag)
         refreshData()
         
+        
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
+       
         listNewsViewModel.checkForNewData()
         // Chech for new data 
         
@@ -85,6 +87,8 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
         cell.cellDelegate = self
         if newsViewData.isItFavourite {
             cell.favoriteButton.isSelected = true
+        }else {
+            cell.favoriteButton.isSelected = false
         }
         
         return  cell
@@ -141,6 +145,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                     print("Loader Initialised!")
                 } else{
                     self.loadingIndicator.stopAnimating()
+                    self.listNewsViewModel.combineLocalWithAPIInfomation()
 //                    self.loadingIndicator.removeFromSuperview()
                 }
             })

@@ -16,6 +16,7 @@ class FavoritenewsViewModel {
     var favoriteistNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
     
     @objc func getFavoriteNews() {
+        favoriteNewsData.removeAll()
         self.realmServise = RealmSerivce()
         self.favoriteNews = self.realmServise.realm.objects(NewsData.self)
         if favoriteNews.count != 0 {
@@ -31,5 +32,28 @@ class FavoritenewsViewModel {
         print("PushToDetail function initiated")
         favoriteistNewsCoordinatorDelegate?.openSingleNews(selectedNews: favoriteNewsData[selectedNews])
     }
+    
+    func favoriteButtonPressed(selectedNews: Int){
+        print("Favorite this news")
+        let savingData = favoriteNewsData[selectedNews]
+        self.realmServise = RealmSerivce()
+        
+        
+        if savingData.isItFavourite {
+            //            savingData.isItFavourite = false
+            print("deleting")
+            self.realmServise.delete(object: savingData)
+            
+        } else {
+            print("add to database")
+            //            savingData.isItFavourite = true
+            
+            self.realmServise.create(object: savingData)
+            
+        }
+        
+        //        print(self.result)
+    }
+    
     
 }

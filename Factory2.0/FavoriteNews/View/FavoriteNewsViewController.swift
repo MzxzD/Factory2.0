@@ -22,22 +22,23 @@ import Realm
             omogućiti prijelaz sa FavView na SingleView
  
  */
-class FavoriteNewsViewController: UITableViewController {
+class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     let cellIdentifier = "ListNewsViewCell"
     var favoriteListNewsViewModel: FavoritenewsViewModel!
-    var selectedCell: ListNewsViewCell!
+//    var selectedCell: ListNewsViewCell!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
         self.favoriteListNewsViewModel = FavoritenewsViewModel()
-        favoriteListNewsViewModel.getFavoriteNews()
+        
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
+        favoriteListNewsViewModel.getFavoriteNews()
         tableView.reloadData()
         // Chech for new data
         
@@ -86,8 +87,17 @@ class FavoriteNewsViewController: UITableViewController {
         if newsViewData.isItFavourite {
             cell.favoriteButton.isSelected = true
         }
-        
+        cell.cellDelegate = self
         return  cell
+    }
+    
+    func didPressButton(_ sender: ListNewsViewCell) {
+        guard let tappedIndexPath = tableView.indexPath(for: sender) else { return }
+        print("tapped! index!")
+        print(tappedIndexPath)
+        
+        favoriteListNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
+        tableView.reloadData()
     }
     
     
