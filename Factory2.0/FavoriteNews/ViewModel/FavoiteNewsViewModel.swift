@@ -5,7 +5,6 @@
 //  Created by Mateo Došlić on 15/07/2018.
 //  Copyright © 2018 Mateo Došlić. All rights reserved.
 //
-
 import Foundation
 import RealmSwift
 
@@ -37,23 +36,12 @@ class FavoritenewsViewModel {
         print("Favorite this news")
         let savingData = favoriteNewsData[selectedNews]
         self.realmServise = RealmSerivce()
-        
-        
-        if savingData.isItFavourite {
+ 
             //            savingData.isItFavourite = false
             print("deleting")
             self.realmServise.delete(object: savingData)
-            
-        } else {
-            print("add to database")
-            //            savingData.isItFavourite = true
-            
-            self.realmServise.create(object: savingData)
-            
-        }
         
-        //        print(self.result)
+   
+    
     }
-    
-    
 }

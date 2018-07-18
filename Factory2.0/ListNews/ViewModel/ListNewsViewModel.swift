@@ -15,8 +15,6 @@ class ListNewsViewModel {
     var listNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
     var downloadTrigger = PublishSubject<Bool>()
     var realmServise: RealmSerivce!
-    var result: Results<NewsData>!
-    var favoriteNewsData: [NewsData]!
     
     init(newsService:APIRepository) {
         self.newsService = newsService
@@ -62,19 +60,9 @@ class ListNewsViewModel {
     
     func combineLocalWithAPIInfomation(){
         print("combining started")
-        favoriteNewsData = []
         self.realmServise = RealmSerivce()
-        self.result = self.realmServise.realm.objects(NewsData.self)
         let favoriteNews = self.realmServise.realm.objects(NewsData.self)
-        if favoriteNews.count != 0 {
-            for element in favoriteNews {
-                favoriteNewsData.append(element)
-            }
-        } else {
-            print("error...")
-        }
-        
-        for (localData) in favoriteNewsData{
+        for (localData) in favoriteNews{
             for(apiData) in newsData {
                 if localData.title == apiData.title {
                     apiData.isItFavourite = true
@@ -118,23 +106,25 @@ class ListNewsViewModel {
     func favoriteButtonPressed(selectedNews: Int){
         print("Favorite this news")
         let savingData = newsData[selectedNews]
+
+
         self.realmServise = RealmSerivce()
-        self.result = self.realmServise.realm.objects(NewsData.self)
+
         
         if savingData.isItFavourite {
-//            savingData.isItFavourite = false
             print("deleting")
-            self.realmServise.delete(object: savingData)
+            let specificNews = realmServise.realm.object(ofType: NewsData.self, forPrimaryKey: savingData.title)
+            self.realmServise.delete(object: specificNews!)
+            savingData.isItFavourite = false
             
         } else {
             print("add to database")
-//            savingData.isItFavourite = true
-            
+            savingData.isItFavourite = true
             self.realmServise.create(object: savingData)
-            
+
         }
         
-//        print(self.result)
+
     }
     
 }

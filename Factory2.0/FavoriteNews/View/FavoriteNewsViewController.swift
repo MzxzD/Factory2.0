@@ -5,7 +5,6 @@
 //  Created by Mateo Došlić on 11/07/2018.
 //  Copyright © 2018 Mateo Došlić. All rights reserved.
 //
-
 import UIKit
 import Alamofire
 import AlamofireImage
@@ -15,18 +14,18 @@ import Realm
 
 
 /* TO DO:
-            Naraviti reload kako treba
-            Error ukoliko je prazan
-            implementirati favbutton kako treba
-            spojiti logiku za brisanje iz FavView-a
-            omogućiti prijelaz sa FavView na SingleView
+ Naraviti reload kako treba
+ Error ukoliko je prazan
+ implementirati favbutton kako treba
+ spojiti logiku za brisanje iz FavView-a
+ omogućiti prijelaz sa FavView na SingleView
  
  */
 class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     let cellIdentifier = "ListNewsViewCell"
     var favoriteListNewsViewModel: FavoritenewsViewModel!
-//    var selectedCell: ListNewsViewCell!
+    //    var selectedCell: ListNewsViewCell!
     
     
     override func viewDidLoad() {
@@ -97,6 +96,7 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
         print(tappedIndexPath)
         
         favoriteListNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
+        favoriteListNewsViewModel.getFavoriteNews()
         tableView.reloadData()
     }
     
@@ -109,6 +109,6 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
         
         favoriteListNewsViewModel.newsSelected(selectedNews: indexPath.row)
     }
-
+    
     
 }

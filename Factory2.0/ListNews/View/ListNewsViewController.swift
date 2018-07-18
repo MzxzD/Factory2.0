@@ -41,6 +41,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     override func viewDidAppear(_ animated: Bool) {
        
         listNewsViewModel.checkForNewData()
+
         // Chech for new data 
         
     }
@@ -85,11 +86,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                 }
         }
         cell.cellDelegate = self
-        if newsViewData.isItFavourite {
-            cell.favoriteButton.isSelected = true
-        }else {
-            cell.favoriteButton.isSelected = false
-        }
+        cell.favoriteButton.isSelected = newsViewData.isItFavourite
         
         return  cell
     }
@@ -100,6 +97,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
         print(tappedIndexPath)
    
          listNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
+//        listNewsViewModel.combineLocalWithAPIInfomation()
         tableView.reloadData()
     }
     

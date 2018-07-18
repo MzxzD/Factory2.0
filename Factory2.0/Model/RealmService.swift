@@ -14,31 +14,22 @@ import RxSwift
 class RealmSerivce {
     
     var realm = try! Realm()
-    var realmServiceIsDone = PublishSubject<Bool>()
     
     func create<T : NewsData>(object: T) {
-        do {
-            try realm.write {
-                object.isItFavourite = true
-                realm.add(object)
-                
-            }
-        } catch let error{
-            print(error.localizedDescription)
-//            self.realmServiceIsDone.onError()
+        try! realm.write {
+            realm.add(object)
+            
+            
         }
-        self.realmServiceIsDone.onNext(true)
     }
     
     func delete<T: NewsData>(object: T){
-        do{
-            try realm.write {
-               // object.isItFavourite = false
-                realm.delete(object)
-               // realm.refresh()
-            }
-        }catch let error {
-            print(error.localizedDescription)
+        
+        try! realm.write {
+           
+            realm.delete(object)
         }
+        
+        
     }
 }
