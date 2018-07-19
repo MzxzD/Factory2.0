@@ -9,8 +9,8 @@ class NewsData: Object {
     @objc dynamic var urlToImage: String? = ""
     @objc dynamic var isItFavourite: Bool = false
     
-    override static func primaryKey() -> String? {
-        return "title"
-    }
+//    override static func primaryKey() -> String? {
+//        return "title"
+//    }
 
 }

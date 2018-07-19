@@ -14,43 +14,53 @@ class FavoriteNewsCoordinator: Coordinator {
     var presenter: UINavigationController
     let controller: FavoriteNewsViewController
     weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
-    
+
     init(presenter: UINavigationController) {
         self.presenter = presenter
         let favoriteNewsontroller = FavoriteNewsViewController()
         let favoriteNewsViewModel = FavoritenewsViewModel()
         favoriteNewsontroller.favoriteListNewsViewModel = favoriteNewsViewModel
+
+
         self.controller = favoriteNewsontroller
+//        favoriteNewsontroller.favoriteListNewsViewModel.favoriteistNewsCoordinatorDelegate = self
     }
     
-    
+    func openSingles(selectedNews: NewsData) {
+        let singleNewsCoordinator = SingleNewsCoordinator(presenter: presenter, news: selectedNews)
+        singleNewsCoordinator.start()
+        singleNewsCoordinator.start()
+    }
+
     func start() {
         presenter.present(controller, animated: true)
     }
-    
+
 }
 
-extension FavoriteNewsCoordinator: ListNewsCoordinatorDelegate {
-    
-    func openSingleNews(selectedNews: NewsData) {
-        print("openSingleNewsInitiated")
-        let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
-        newsDetailCoordinator.start()
-        self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
-        print(self.childCoordinator)
-    }
-    
-    func viewControllerHasFinished() {
-        self.childCoordinator.removeAll()
-        parentCoordinatorDelegate?.childHasFinished(coordinator: self)
-    }
-    
-    
-}
+//extension FavoriteNewsCoordinator: ListNewsCoordinatorDelegate {
+//
+//    func openSingleNews(selectedNews: NewsData) {
+//        print("openSingleNewsInitiated")
+//        let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
+//        print(newsDetailCoordinator)
+//        newsDetailCoordinator.start()
+//        self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
+//        print(self.childCoordinator)
+//    }
+//
+//    func viewControllerHasFinished() {
+//        self.childCoordinator.removeAll()
+//        parentCoordinatorDelegate?.childHasFinished(coordinator: self)
+//    }
+//
+//
+//}
+//
+//extension FavoriteNewsCoordinator: ParentCoordinatorDelegate{
+//    func childHasFinished(coordinator: Coordinator) {
+//        removeChildCoordinator(childCoordinator: coordinator)
+//    }
+//}
 
-extension FavoriteNewsCoordinator: ParentCoordinatorDelegate{
-    func childHasFinished(coordinator: Coordinator) {
-        removeChildCoordinator(childCoordinator: coordinator)
-    }
-}
 

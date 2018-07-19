@@ -126,6 +126,7 @@ class SingleNewsViewController: UIViewController  {
          
          
                         */
+        singleNewsViewModel.delete()
         navigationItem.setRightBarButtonItems([favoritesBarButtonOFF], animated: true)
         print("Goes off the Fav")
     }
@@ -138,6 +139,8 @@ class SingleNewsViewController: UIViewController  {
          
          
          */
+        singleNewsViewModel.add()
+        
         navigationItem.setRightBarButtonItems([favoritesBarButtonOn], animated: true)
         print("On it goes!")
     }

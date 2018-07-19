@@ -41,7 +41,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     override func viewDidAppear(_ animated: Bool) {
        
         listNewsViewModel.checkForNewData()
-
+        tableView.reloadData()
         // Chech for new data 
         
     }

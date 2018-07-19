@@ -45,6 +45,7 @@ extension ListNewsCoordinator: ListNewsCoordinatorDelegate {
     func openSingleNews(selectedNews: NewsData) {
         print("openSingleNewsInitiated")
         let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
+        print(newsDetailCoordinator)
         newsDetailCoordinator.start()
         self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
         print(self.childCoordinator)

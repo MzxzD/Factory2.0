@@ -27,7 +27,8 @@ class RealmSerivce {
         
         try! realm.write {
            
-            realm.delete(object)
+            realm.delete(realm.objects(NewsData.self).filter("title=%@", object.title!))
+   
         }
         
         

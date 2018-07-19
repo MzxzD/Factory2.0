@@ -26,22 +26,17 @@ class FavoritenewsViewModel {
             errorOccured(value: "No Favorites has been added")
         }
     }
-    
+
     func newsSelected(selectedNews: Int) {
         print("PushToDetail function initiated")
-        favoriteistNewsCoordinatorDelegate?.openSingleNews(selectedNews: favoriteNewsData[selectedNews])
     }
     
     func favoriteButtonPressed(selectedNews: Int){
         print("Favorite this news")
         let savingData = favoriteNewsData[selectedNews]
         self.realmServise = RealmSerivce()
- 
-            //            savingData.isItFavourite = false
             print("deleting")
             self.realmServise.delete(object: savingData)
-        
-   
     
     }
 }
