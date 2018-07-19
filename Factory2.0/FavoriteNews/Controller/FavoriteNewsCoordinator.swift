@@ -18,7 +18,8 @@ class FavoriteNewsCoordinator: Coordinator {
     init(presenter: UINavigationController) {
         self.presenter = presenter
         let favoriteNewsontroller = FavoriteNewsViewController()
-//        let favoriteNewsViewModel =
+        let favoriteNewsViewModel = FavoritenewsViewModel()
+        favoriteNewsontroller.favoriteListNewsViewModel = favoriteNewsViewModel
         self.controller = favoriteNewsontroller
     }
     

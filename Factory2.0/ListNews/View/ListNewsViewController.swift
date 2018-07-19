@@ -143,8 +143,8 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                     print("Loader Initialised!")
                 } else{
                     self.loadingIndicator.stopAnimating()
-                    self.listNewsViewModel.combineLocalWithAPIInfomation()
-//                    self.loadingIndicator.removeFromSuperview()
+       //             self.listNewsViewModel.combineLocalWithAPIInfomation()
+
                 }
             })
             .disposed(by: disposeBag)

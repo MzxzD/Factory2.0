@@ -32,7 +32,7 @@ class APIRepository {
                     return WrapperData(data: [], errorMessage: error.localizedDescription)
                 }
                 print("Download Complete!")
-                return WrapperData(data: articles, errorMessage: nil)
+                return WrapperData(data: articles , errorMessage: nil)
             })
             .catchError({ (error) -> Observable<WrapperData<Article>> in
                 print(error)

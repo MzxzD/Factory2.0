@@ -8,14 +8,16 @@ class ListNewsViewModel {
     
     fileprivate let newsService:APIRepository
     var newsData: [NewsData] = []
+    var favoriteData: [NewsData] = []
+    var tupleData:(WrapperData<NewsData>, WrapperData<NewsData>)!
     var successDownloadTime: Date?
     var dataIsReady = PublishSubject<Bool>()
     var loaderControll = PublishSubject<Bool>()
     var errorOccured = PublishSubject<Bool>()
     var listNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
     var downloadTrigger = PublishSubject<Bool>()
-    var realmServise: RealmSerivce!
-    
+    var realmServise = RealmSerivce()
+   // var newsWHY = Observable.combineLatest(favoriteOberver, downloadObserver)
     init(newsService:APIRepository) {
         self.newsService = newsService
     }
@@ -26,30 +28,42 @@ class ListNewsViewModel {
         
         
         
-        let downloadObserver = downloadTrigger.flatMap { [unowned self] (_) -> Observable<WrapperData<Article>> in
-            print("Download Observer Initialised!")
+        let combinedObservable = downloadTrigger.flatMap { [unowned self] (_) -> Observable<(WrapperData<NewsData>, WrapperData<NewsData>)> in
             self.loaderControll.onNext(true)
-            return self.newsService.fetchNewsFromAPI()
-        }
-        
-        return downloadObserver.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
-            .observeOn(MainScheduler.instance)
-            
-            .map({ (wrapperArticleData) -> WrapperData<NewsData>  in
+            let favoriteObserver = self.realmServise.getFavoriteData()
+            let downloadObserver = self.newsService.fetchNewsFromAPI()
+
+            let unwrappedDownloadObserver = downloadObserver.map({ (wrapperArticleData) -> WrapperData<NewsData> in
                 print("wrappedArticle into WrappedNews")
                 return WrapperData<NewsData>(data:wrapperArticleData.data.map({ (article) -> NewsData in
-                 
+                    
                     return NewsData(value: ["title": article.title, "descriptionNews": article.description, "urlToImage": article.urlToImage])
                 }), errorMessage: wrapperArticleData.errorMessage )
             })
 
-            .subscribe(onNext: { [unowned self] (newsArray) in
+  
+            return Observable.combineLatest(unwrappedDownloadObserver,favoriteObserver)
+        }
+        return combinedObservable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            
+            .subscribe(onNext: { (news) in
                 
-                if newsArray.errorMessage == nil {
+                if news.0.errorMessage == nil && news.1.errorMessage == nil {
                     
+                    for (localData) in news.1.data{
+                        for(apiData) in news.0.data {
+                            if localData.title == apiData.title {
+                                apiData.isItFavourite = true
+                            }
+                        }
+                    }
+                    
+                    self.favoriteData = news.1.data
+                    self.newsData = news.0.data
+                    self.tupleData = news
                     self.dataIsReady.onNext(true)
                     self.loaderControll.onNext(false)
-                    self.newsData = newsArray.data
                 } else {
                     self.dataIsReady.onNext(true)
                     self.errorOccured.onNext(true)
@@ -57,6 +71,9 @@ class ListNewsViewModel {
                 }
             })
     }
+    
+   
+    
     
     func combineLocalWithAPIInfomation(){
         print("combining started")
@@ -106,21 +123,29 @@ class ListNewsViewModel {
     func favoriteButtonPressed(selectedNews: Int){
         print("Favorite this news")
         let savingData = newsData[selectedNews]
-
-
         self.realmServise = RealmSerivce()
 
         
         if savingData.isItFavourite {
             print("deleting")
-            let specificNews = realmServise.realm.object(ofType: NewsData.self, forPrimaryKey: savingData.title)
-            self.realmServise.delete(object: specificNews!)
-            savingData.isItFavourite = false
+
+            try! realmServise.realm.write {
+                let result = realmServise.realm.objects(NewsData.self).filter("title=%@",newsData[selectedNews].title!)
+
+                realmServise.realm.delete(result)
+            }
+//            self.realmServise.delete(object: newsToBeDeletedFromDatabase)
+//            savingData.isItFavourite = false
+//            print(specificNews)
+//            
+//            print(savingData)
             
         } else {
             print("add to database")
             savingData.isItFavourite = true
-            self.realmServise.create(object: savingData)
+            favoriteData.append(savingData)
+            let savingdata = favoriteData.last
+            self.realmServise.create(object: savingdata!)
 
         }
         
