@@ -87,9 +87,7 @@ class ListNewsViewCell: UITableViewCell {
 
     
    @objc func favTapped(sender: UIButton) {
-    print("fabTappedInitiated")
         cellDelegate?.didPressButton(self)
-    favoriteButton.isSelected = true
     }
     
 }

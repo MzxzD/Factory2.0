@@ -33,12 +33,12 @@ class RealmSerivce {
     }
 
 
-    func getFavoriteData() -> (Observable<WrapperData<NewsData>>){
+    func getFavoriteData() -> (Observable<DataAndErrorWrapper<NewsData>>){
         var favoriteNewsData: [NewsData] = []
         let favoriteNews = self.realm.objects(NewsData.self)
         for element in favoriteNews {
             favoriteNewsData += [element]
         }
-        return Observable.just(WrapperData(data: favoriteNewsData, errorMessage: nil))
+        return Observable.just(DataAndErrorWrapper(data: favoriteNewsData, errorMessage: nil))
     }
 }

@@ -22,14 +22,14 @@ class ListNewsViewModel {
     func initializeObservableDataAPI() -> Disposable{
         print("InitializeObservableDataAPI called!")
         
-        let combinedObservable = downloadTrigger.flatMap { [unowned self] (_) -> Observable<(WrapperData<NewsData>, WrapperData<NewsData>)> in
+        let combinedObservable = downloadTrigger.flatMap { [unowned self] (_) -> Observable<(DataAndErrorWrapper<NewsData>, DataAndErrorWrapper<NewsData>)> in
             self.loaderControll.onNext(true)
             let favoriteObserver = self.realmServise.getFavoriteData()
             let downloadObserver = self.newsService.fetchNewsFromAPI()
             
-            let unwrappedDownloadObserver = downloadObserver.map({ (wrapperArticleData) -> WrapperData<NewsData> in
+            let unwrappedDownloadObserver = downloadObserver.map({ (wrapperArticleData) -> DataAndErrorWrapper<NewsData> in
                 print("wrappedArticle into WrappedNews")
-                return WrapperData<NewsData>(data:wrapperArticleData.data.map({ (article) -> NewsData in
+                return DataAndErrorWrapper<NewsData>(data:wrapperArticleData.data.map({ (article) -> NewsData in
                     
                     return NewsData(value: ["title": article.title, "descriptionNews": article.description, "urlToImage": article.urlToImage])
                 }), errorMessage: wrapperArticleData.errorMessage )
@@ -39,7 +39,7 @@ class ListNewsViewModel {
         }
         return combinedObservable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
-            .map({ (wrappedDownloadedData, wrappedFavoriteData) -> (WrapperData<NewsData>, WrapperData<NewsData>) in
+            .map({ (wrappedDownloadedData, wrappedFavoriteData) -> (DataAndErrorWrapper<NewsData>, DataAndErrorWrapper<NewsData>) in
                 for (localData) in wrappedFavoriteData.data{
                     for(apiData) in wrappedDownloadedData.data {
                         if localData.title == apiData.title {
@@ -58,6 +58,21 @@ class ListNewsViewModel {
             })
     }
     
+    
+    func compareAPIWithRealm() {
+        for apiData in newsData {
+            apiData.isItFavourite = false
+        }
+        
+        let favoriteNewsData = self.realmServise.realm.objects(NewsData.self)
+        for data in favoriteNewsData{
+            for(apiData) in newsData {
+                if data.title == apiData.title {
+                    apiData.isItFavourite = true
+                }
+            }
+        }
+    }
     // Setting Up timer for new data
     func checkForNewData() {
         print("ChechForNewData initialised!")
@@ -80,6 +95,7 @@ class ListNewsViewModel {
             successDownloadTime = currentTime
         }
     }
+ 
     
     func newsSelected(selectedNews: Int) {
         print("PushToDetail function initiated")

@@ -33,6 +33,9 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         listNewsViewModel.checkForNewData()
+        
+        listNewsViewModel.compareAPIWithRealm()
+        tableView.reloadData()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
