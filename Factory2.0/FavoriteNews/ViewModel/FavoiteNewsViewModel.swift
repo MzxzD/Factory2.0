@@ -19,7 +19,10 @@ class FavoritenewsViewModel {
         self.favoriteNews = self.realmServise.realm.objects(NewsData.self)
         if favoriteNews.count != 0 {
             for element in self.favoriteNews {
-                self.favoriteNewsData += [element]
+                if element.isItFavourite == true{
+                    self.favoriteNewsData += [element]
+                }
+                
             }
         } else {
             errorOccured(value: "No Favorites has been added")
@@ -29,7 +32,8 @@ class FavoritenewsViewModel {
 
     func newsSelected(selectedNews: Int) {
         print("PushToDetail function initiated")
-        favoriteistNewsCoordinatorDelegate?.openSingleNews(selectedNews: favoriteNewsData[selectedNews])
+        let newData = NewsData(value: favoriteNewsData[selectedNews])
+        favoriteistNewsCoordinatorDelegate?.openSingleNews(selectedNews: newData)
     }
     
     func favoriteButtonPressed(selectedNews: Int){

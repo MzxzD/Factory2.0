@@ -86,14 +86,12 @@ class ListNewsViewModel {
         self.listNewsCoordinatorDelegate?.openSingleNews(selectedNews: newsData[selectedNews])
     }
     
-    func favoriteButtonPressed(selectedNews: Int){
-        print("Favorite this news")
+    func addOrRemoveDataFromDatabase(selectedNews: Int){
         let savingData = NewsData(value: newsData[selectedNews])
         if savingData.isItFavourite {
             print("deleting")
             self.realmServise.delete(object: savingData)
             newsData[selectedNews].isItFavourite = false
-            
         } else {
             print("add to database")
             savingData.isItFavourite = true

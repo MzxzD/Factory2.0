@@ -28,7 +28,6 @@ class SingleNewsViewModel {
         }
         print(newsData.isItFavourite)
         return newsData.isItFavourite
-        
     }
     
 }

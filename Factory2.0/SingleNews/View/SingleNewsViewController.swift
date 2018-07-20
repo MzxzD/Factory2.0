@@ -10,16 +10,7 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
-
-/* TO DO:
- 
- Implementirari FavButton
- Spojiti logiku za dodavanje/brisanje Favorites
- 
- */
-
 class SingleNewsViewController: UIViewController  {
-    
     // MARK: variables
     var singleNewsViewModel: SingleNewsViewModel!
     
@@ -30,7 +21,6 @@ class SingleNewsViewController: UIViewController  {
         
         return button
     }()
-    
     
     var newsImage: UIImageView = {
         let imageView = UIImageView()
@@ -75,7 +65,6 @@ class SingleNewsViewController: UIViewController  {
     
     
     func addSubViews() {
-        
         view.addSubview(newsImage)
         Alamofire.request(URL (string: singleNewsViewModel.newsData.urlToImage!)!).responseImage
             {
@@ -83,7 +72,6 @@ class SingleNewsViewController: UIViewController  {
                 if let image = response.result.value
                 {
                     self.newsImage.image = image
-                    
                 }
         }
         
@@ -119,14 +107,11 @@ class SingleNewsViewController: UIViewController  {
     
     
     @objc func buttonPressed() {
-        
         favoriteButton.isSelected =  singleNewsViewModel.addOrRemoveFromDataBase()
         
     }
     
-    
-    
-    
+
     // Deinitialization of the ViewContoller
     deinit {
         

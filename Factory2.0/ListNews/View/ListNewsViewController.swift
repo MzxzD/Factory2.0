@@ -11,9 +11,7 @@ import Alamofire
 import AlamofireImage
 import RxSwift
 
-
 class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
-
     let cellIdentifier = "ListNewsViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     let disposeBag = DisposeBag()
@@ -34,11 +32,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     
     override func viewDidAppear(_ animated: Bool) {
-       
-
         listNewsViewModel.checkForNewData()
-        // Chech for new data 
-        
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -87,11 +81,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     func didPressButton(_ sender: ListNewsViewCell) {
         guard let tappedIndexPath = tableView.indexPath(for: sender) else { return }
-        print("tapped! index!")
-        print(tappedIndexPath)
-   
-         listNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
-//        listNewsViewModel.combineLocalWithAPIInfomation()
+        listNewsViewModel.addOrRemoveDataFromDatabase(selectedNews: tappedIndexPath.row)
         tableView.reloadData()
     }
     
@@ -100,7 +90,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         listNewsViewModel.newsSelected(selectedNews: indexPath.row)
     }
     
@@ -111,18 +100,16 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     }
     
     func refreshData() {
-
         refresher = UIRefreshControl()
         tableView.addSubview(refresher)
         refresher.attributedTitle = NSAttributedString(string: "Refreshing")
         refresher.tintColor = UIColor(red: 0, green: 0.6, blue: 0.949, alpha: 1.0)
         refresher.addTarget(self, action: #selector(triggerDownload), for: .valueChanged)
         initializeError()
+        
     }
     
-    
     func innitializeLoaderObservable() {
-    
         let loadingObserver = listNewsViewModel.loaderControll
         loadingObserver.asObservable()
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
@@ -137,8 +124,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                     print("Loader Initialised!")
                 } else{
                     self.loadingIndicator.stopAnimating()
-       //             self.listNewsViewModel.combineLocalWithAPIInfomation()
-
                 }
             })
             .disposed(by: disposeBag)
@@ -162,7 +147,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                 }
             })
         .disposed(by: disposeBag)
-//        errorOccured(value: )
     }
     
     func initializeDataObservable(){
