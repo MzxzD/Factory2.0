@@ -15,20 +15,21 @@ class SingleNewsViewModel {
     var newsData: NewsData!
     let realmService = RealmSerivce()
     
-    
-    func delete(){
+    func addOrRemoveFromDataBase() -> Bool {
         let newData = NewsData(value: newsData)
-        self.realmService.delete(object: newData)
-        newsData.isItFavourite = false
+        
+        if (newData.isItFavourite == true ){
+            self.realmService.delete(object: newData)
+            newsData.isItFavourite = false
+        } else {
+            newData.isItFavourite = true
+            self.realmService.create(object: newData)
+            newsData.isItFavourite = true
+        }
+        print(newsData.isItFavourite)
+        return newsData.isItFavourite
         
     }
-    
-    func add() {
-        let newData = NewsData(value: newsData)
-        self.realmService.create(object: newData)
-        newsData.isItFavourite = true
-    }
-    
     
 }
 

@@ -8,8 +8,6 @@ class ListNewsViewModel {
     
     fileprivate let newsService:APIRepository
     var newsData: [NewsData] = []
-    var favoriteData: [NewsData] = []
-    var tupleData:(WrapperData<NewsData>, WrapperData<NewsData>)!
     var successDownloadTime: Date?
     var dataIsReady = PublishSubject<Bool>()
     var loaderControll = PublishSubject<Bool>()
@@ -41,43 +39,23 @@ class ListNewsViewModel {
         }
         return combinedObservable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
-            
-            .subscribe(onNext: { (news) in
-                
-                if news.0.errorMessage == nil && news.1.errorMessage == nil {
-                    
-                    for (localData) in news.1.data{
-                        for(apiData) in news.0.data {
-                            if localData.title == apiData.title {
-                                apiData.isItFavourite = true
-                            }
+            .map({ (wrappedDownloadedData, wrappedFavoriteData) -> (WrapperData<NewsData>, WrapperData<NewsData>) in
+                for (localData) in wrappedFavoriteData.data{
+                    for(apiData) in wrappedDownloadedData.data {
+                        if localData.title == apiData.title {
+                            apiData.isItFavourite = true
                         }
                     }
-                    
-                    self.favoriteData = news.1.data
-                    self.newsData = news.0.data
-                    self.tupleData = news
+                }
+                return (wrappedDownloadedData, wrappedFavoriteData)
+            })
+            .subscribe(onNext: { (downloadedNews, favoriteNews) in
+                
+                    self.newsData = downloadedNews.data
                     self.dataIsReady.onNext(true)
                     self.loaderControll.onNext(false)
-                } else {
-                    self.dataIsReady.onNext(true)
-                    self.errorOccured.onNext(true)
-                    print("Error Occured")
-                }
+      
             })
-    }
-    
-    func combineLocalWithAPIInfomation(){
-        print("combining started")
-        self.realmServise = RealmSerivce()
-        let favoriteNews = self.realmServise.realm.objects(NewsData.self)
-        for (localData) in favoriteNews{
-            for(apiData) in newsData {
-                if localData.title == apiData.title {
-                    apiData.isItFavourite = true
-                }
-            }
-        }
     }
     
     // Setting Up timer for new data
@@ -111,9 +89,6 @@ class ListNewsViewModel {
     func favoriteButtonPressed(selectedNews: Int){
         print("Favorite this news")
         let savingData = NewsData(value: newsData[selectedNews])
-        self.realmServise = RealmSerivce()
-        
-        
         if savingData.isItFavourite {
             print("deleting")
             self.realmServise.delete(object: savingData)
@@ -122,11 +97,10 @@ class ListNewsViewModel {
         } else {
             print("add to database")
             savingData.isItFavourite = true
-            favoriteData.append(savingData)
-            let savingdata = favoriteData.last
-            self.realmServise.create(object: savingdata!)
+            self.realmServise.create(object: savingData)
             newsData[selectedNews].isItFavourite = true
             
         }
+
     }
 }

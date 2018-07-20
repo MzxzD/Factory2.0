@@ -30,12 +30,8 @@ class RealmSerivce {
             realm.delete(realm.objects(NewsData.self).filter("title=%@", object.title!))
    
         }
-        
-        
     }
-    
-    
-    
+
 
     func getFavoriteData() -> (Observable<WrapperData<NewsData>>){
         var favoriteNewsData: [NewsData] = []

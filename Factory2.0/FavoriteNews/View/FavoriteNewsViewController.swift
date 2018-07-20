@@ -31,12 +31,16 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        self.favoriteListNewsViewModel = FavoritenewsViewModel()
         
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
+        /*
+         TO DO:
+         funkcije dolje zamjeniti sa PublishSubject i napraviti funkciju za njih
+         */
+        
         favoriteListNewsViewModel.getFavoriteNews()
         tableView.reloadData()
         // Chech for new data
@@ -96,7 +100,6 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
         print(tappedIndexPath)
         
         favoriteListNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
-        favoriteListNewsViewModel.getFavoriteNews()
         tableView.reloadData()
     }
     

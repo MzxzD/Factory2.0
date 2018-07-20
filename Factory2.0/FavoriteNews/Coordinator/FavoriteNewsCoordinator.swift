@@ -23,7 +23,7 @@ class FavoriteNewsCoordinator: Coordinator {
 
 
         self.controller = favoriteNewsontroller
-//        favoriteNewsontroller.favoriteListNewsViewModel.favoriteistNewsCoordinatorDelegate = self
+        favoriteNewsontroller.favoriteListNewsViewModel.favoriteistNewsCoordinatorDelegate = self
     }
     
     func openSingles(selectedNews: NewsData) {
@@ -38,29 +38,29 @@ class FavoriteNewsCoordinator: Coordinator {
 
 }
 
-//extension FavoriteNewsCoordinator: ListNewsCoordinatorDelegate {
-//
-//    func openSingleNews(selectedNews: NewsData) {
-//        print("openSingleNewsInitiated")
-//        let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
-//        print(newsDetailCoordinator)
-//        newsDetailCoordinator.start()
-//        self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
-//        print(self.childCoordinator)
-//    }
-//
-//    func viewControllerHasFinished() {
-//        self.childCoordinator.removeAll()
-//        parentCoordinatorDelegate?.childHasFinished(coordinator: self)
-//    }
-//
-//
-//}
-//
-//extension FavoriteNewsCoordinator: ParentCoordinatorDelegate{
-//    func childHasFinished(coordinator: Coordinator) {
-//        removeChildCoordinator(childCoordinator: coordinator)
-//    }
-//}
+extension FavoriteNewsCoordinator: ListNewsCoordinatorDelegate {
+
+    func openSingleNews(selectedNews: NewsData) {
+        print("openSingleNewsInitiated")
+        let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
+        print(newsDetailCoordinator)
+        newsDetailCoordinator.start()
+        self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
+        print(self.childCoordinator)
+    }
+
+    func viewControllerHasFinished() {
+        self.childCoordinator.removeAll()
+        parentCoordinatorDelegate?.childHasFinished(coordinator: self)
+    }
+
+
+}
+
+extension FavoriteNewsCoordinator: ParentCoordinatorDelegate{
+    func childHasFinished(coordinator: Coordinator) {
+        removeChildCoordinator(childCoordinator: coordinator)
+    }
+}
 
 

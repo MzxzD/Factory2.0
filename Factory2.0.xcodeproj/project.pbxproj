@@ -25,7 +25,6 @@
 		CFC6577020F61CA200AA7AE1 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6576F20F61CA200AA7AE1 /* BaseViewController.swift */; };
 		CFC6577A20F626F600AA7AE1 /* FavoriteNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6577920F626F600AA7AE1 /* FavoriteNewsViewController.swift */; };
 		CFC6577C20F627C400AA7AE1 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6577B20F627C400AA7AE1 /* BaseCoordinator.swift */; };
-		CFC6577E20F63B2C00AA7AE1 /* BaseCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC6577D20F63B2C00AA7AE1 /* BaseCoordinatorDelegate.swift */; };
 		CFD23AC620F489CE00659729 /* SingleNewsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD23AC520F489CE00659729 /* SingleNewsCoordinator.swift */; };
 		CFD8C02520F3851F00063F49 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02420F3851F00063F49 /* AppCoordinator.swift */; };
 		CFD8C02720F3852B00063F49 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02620F3852B00063F49 /* Coordinator.swift */; };
@@ -61,7 +60,6 @@
 		CFC6576F20F61CA200AA7AE1 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		CFC6577920F626F600AA7AE1 /* FavoriteNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNewsViewController.swift; sourceTree = "<group>"; };
 		CFC6577B20F627C400AA7AE1 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
-		CFC6577D20F63B2C00AA7AE1 /* BaseCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseCoordinatorDelegate.swift; path = Factory2.0/Base/Coordinator/BaseCoordinatorDelegate.swift; sourceTree = SOURCE_ROOT; };
 		CFD23AC520F489CE00659729 /* SingleNewsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleNewsCoordinator.swift; sourceTree = "<group>"; };
 		CFD8C02420F3851F00063F49 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		CFD8C02620F3852B00063F49 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				CFC6577B20F627C400AA7AE1 /* BaseCoordinator.swift */,
-				CFC6577D20F63B2C00AA7AE1 /* BaseCoordinatorDelegate.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -230,7 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				CFC6577720F61D8100AA7AE1 /* ViewModel */,
-				CFC6577620F61D7B00AA7AE1 /* Controller */,
+				CFC6577620F61D7B00AA7AE1 /* Coordinator */,
 				CFC6577520F61D7400AA7AE1 /* View */,
 			);
 			path = FavoriteNews;
@@ -244,12 +241,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		CFC6577620F61D7B00AA7AE1 /* Controller */ = {
+		CFC6577620F61D7B00AA7AE1 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				CFE0426B20F750F60042CB2F /* FavoriteNewsCoordinator.swift */,
 			);
-			path = Controller;
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		CFC6577720F61D8100AA7AE1 /* ViewModel */ = {
@@ -463,7 +460,6 @@
 			files = (
 				CFD8C02520F3851F00063F49 /* AppCoordinator.swift in Sources */,
 				CFD23AC620F489CE00659729 /* SingleNewsCoordinator.swift in Sources */,
-				CFC6577E20F63B2C00AA7AE1 /* BaseCoordinatorDelegate.swift in Sources */,
 				CF137A2D20E8076A002A45A6 /* APIRepository.swift in Sources */,
 				CF137A3420E80779002A45A6 /* SingleNewsViewController.swift in Sources */,
 				CFE0427020F7800B0042CB2F /* RealmService.swift in Sources */,

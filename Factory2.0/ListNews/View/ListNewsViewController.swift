@@ -14,17 +14,14 @@ import RxSwift
 
 class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
 
-    
-    
     let cellIdentifier = "ListNewsViewCell"
     let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
     let disposeBag = DisposeBag()
     var refresher: UIRefreshControl!
     var alert = UIAlertController()
     var listNewsViewModel: ListNewsViewModel!
-//    var selectedCell: ListNewsViewCell!
-   
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
@@ -33,20 +30,17 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
         initializeError()
         listNewsViewModel.initializeObservableDataAPI().disposed(by: disposeBag)
         refreshData()
-        
-        
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
        
+
         listNewsViewModel.checkForNewData()
-        tableView.reloadData()
         // Chech for new data 
         
     }
-    
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if self.isMovingFromParentViewController {
