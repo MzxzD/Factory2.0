@@ -27,7 +27,7 @@ class BaseCoordinator: Coordinator {
      //   presenter.navigationItem.title = favouriteNewsNavigationController.tabBarItem.title
         
         let listNewsCoordinator = ListNewsCoordinator(presenter: presenter)
-        let listNewsNavigationController = createNavigationController(viewController: listNewsCoordinator.controller, name: "LIST NEWS", unselectedImage: "video_black", selectedImage: "video_white")
+        let listNewsNavigationController = createNavigationController(viewController: listNewsCoordinator.controller, name: "LIST NEWS", unselectedImage: "list_news", selectedImage: "list_news")
         
         self.controller.setViewControllers([listNewsNavigationController, favouriteNewsNavigationController], animated: false)
         listNewsCoordinator.controller.listNewsViewModel.listNewsCoordinatorDelegate = listNewsCoordinator

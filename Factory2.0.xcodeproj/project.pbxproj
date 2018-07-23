@@ -226,8 +226,8 @@
 		CFC6577420F61D5700AA7AE1 /* FavoriteNews */ = {
 			isa = PBXGroup;
 			children = (
-				CFC6577720F61D8100AA7AE1 /* ViewModel */,
 				CFC6577620F61D7B00AA7AE1 /* Coordinator */,
+				CFC6577720F61D8100AA7AE1 /* ViewModel */,
 				CFC6577520F61D7400AA7AE1 /* View */,
 			);
 			path = FavoriteNews;

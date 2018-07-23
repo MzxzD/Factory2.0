@@ -33,9 +33,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         listNewsViewModel.checkForNewData()
-        
-        listNewsViewModel.compareAPIWithRealm()
-        tableView.reloadData()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -85,7 +82,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     func didPressButton(_ sender: ListNewsViewCell) {
         guard let tappedIndexPath = tableView.indexPath(for: sender) else { return }
         listNewsViewModel.addOrRemoveDataFromDatabase(selectedNews: tappedIndexPath.row)
-        tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

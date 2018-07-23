@@ -20,18 +20,10 @@ class FavoriteNewsCoordinator: Coordinator {
         let favoriteNewsontroller = FavoriteNewsViewController()
         let favoriteNewsViewModel = FavoritenewsViewModel()
         favoriteNewsontroller.favoriteListNewsViewModel = favoriteNewsViewModel
-
-
         self.controller = favoriteNewsontroller
         favoriteNewsontroller.favoriteListNewsViewModel.favoriteistNewsCoordinatorDelegate = self
     }
     
-    func openSingles(selectedNews: NewsData) {
-        let singleNewsCoordinator = SingleNewsCoordinator(presenter: presenter, news: selectedNews)
-        singleNewsCoordinator.start()
-        singleNewsCoordinator.start()
-    }
-
     func start() {
         presenter.present(controller, animated: true)
     }

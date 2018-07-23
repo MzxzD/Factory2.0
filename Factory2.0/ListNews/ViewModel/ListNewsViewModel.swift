@@ -50,10 +50,19 @@ class ListNewsViewModel {
                 return (wrappedDownloadedData, wrappedFavoriteData)
             })
             .subscribe(onNext: { (downloadedNews, favoriteNews) in
-                
+                // ovako mogu:
+                if downloadedNews.errorMessage == nil && favoriteNews.errorMessage == nil {
+                    
                     self.newsData = downloadedNews.data
                     self.dataIsReady.onNext(true)
                     self.loaderControll.onNext(false)
+                    
+                } else {
+                    
+                    self.errorOccured.onNext(true)
+
+                }
+           
       
             })
     }
@@ -72,8 +81,9 @@ class ListNewsViewModel {
                 }
             }
         }
+        self.dataIsReady.onNext(true)
     }
-    // Setting Up timer for new data
+    // Setting Up timer for new data (treba refresh liste napraviti)
     func checkForNewData() {
         print("ChechForNewData initialised!")
         let currentTime = Date()
@@ -88,6 +98,7 @@ class ListNewsViewModel {
         
         if compareCurrentTimeAndTimeDataHasDownloaded! > currentTime  {
             print("still")
+            compareAPIWithRealm()
             return
         } else {
             print("5minutes has passed, downloading anew.")
@@ -115,6 +126,6 @@ class ListNewsViewModel {
             newsData[selectedNews].isItFavourite = true
             
         }
-
+        self.dataIsReady.onNext(true)
     }
 }

@@ -12,41 +12,24 @@ import RxSwift
 import RealmSwift
 import Realm
 
-
-/* TO DO:
- Naraviti reload kako treba
- Error ukoliko je prazan
- implementirati favbutton kako treba
- spojiti logiku za brisanje iz FavView-a
- omogućiti prijelaz sa FavView na SingleView
- 
- */
 class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     let cellIdentifier = "ListNewsViewCell"
     var favoriteListNewsViewModel: FavoritenewsViewModel!
-    //    var selectedCell: ListNewsViewCell!
-    
-    
+    let disposebag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        
+        favoriteListNewsViewModel.getFavoriteNews().disposed(by: disposebag)
+         initializeRealmObservable()
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
-        /*
-         TO DO:
-         funkcije dolje zamjeniti sa PublishSubject i napraviti funkciju za njih
-         */
-        
-        favoriteListNewsViewModel.getFavoriteNews()
-        tableView.reloadData()
-        // Chech for new data
+        starGettingDataFromRealm()
         
     }
-    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -99,7 +82,7 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
         print("tapped! index!")
         print(tappedIndexPath)
         
-        favoriteListNewsViewModel.favoriteButtonPressed(selectedNews: tappedIndexPath.row)
+        favoriteListNewsViewModel.removeDataFromFavorite(selectedNews: tappedIndexPath.row)
         tableView.reloadData()
     }
     
@@ -114,4 +97,19 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
     }
     
     
+    func initializeRealmObservable() {
+        let observer = favoriteListNewsViewModel.dataIsReady
+        observer
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [unowned self] (event) in
+                if event {
+                    self.tableView.reloadData()
+                }
+            }).disposed(by: disposebag)
+    }
+    
+    func starGettingDataFromRealm() {
+      favoriteListNewsViewModel.realmTrigger.onNext(true)
+    }
 }
