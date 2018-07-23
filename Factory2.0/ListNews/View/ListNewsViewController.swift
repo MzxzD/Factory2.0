@@ -18,8 +18,8 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     var refresher: UIRefreshControl!
     var alert = UIAlertController()
     var listNewsViewModel: ListNewsViewModel!
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
@@ -34,7 +34,7 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     override func viewDidAppear(_ animated: Bool) {
         listNewsViewModel.checkForNewData()
     }
-
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if self.isMovingFromParentViewController {
@@ -42,7 +42,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
         }
     }
     
-    // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -53,9 +52,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        
-        // Table view cell are used and should be dequeued using a cell identifier
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ListNewsViewCell else
         {
             errorOccured(value: "The dequeued cell is not an instance of PreviewDataTableViewCell.")
@@ -75,7 +71,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
         }
         cell.cellDelegate = self
         cell.favoriteButton.isSelected = newsViewData.isItFavourite
-        
         return  cell
     }
     
@@ -91,7 +86,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         listNewsViewModel.newsSelected(selectedNews: indexPath.row)
     }
-    
     
     @objc func triggerDownload() {
         listNewsViewModel.downloadTrigger.onNext(true)
@@ -120,7 +114,6 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                     self.loadingIndicator.color = UIColor.blue
                     self.view.addSubview(self.loadingIndicator)
                     self.loadingIndicator.startAnimating()
-                    print("Loader Initialised!")
                 } else{
                     self.loadingIndicator.stopAnimating()
                 }
@@ -139,13 +132,11 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                     self.loadingIndicator.stopAnimating()
                     self.refresher.endRefreshing()
                     self.refresher.isHidden = true
-                    print("Event triggered")
                     downloadError(viewToPresent: self)
                 } else {
-                    print("Event Not triggered")
                 }
             })
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func initializeDataObservable(){
@@ -159,10 +150,8 @@ class ListNewsViewController: UITableViewController, NewsViewCellDelegate {
                     self.tableView.reloadData()
                     self.refresher.endRefreshing()
                 }
-
             })
             .disposed(by: disposeBag)
     }
-    
     
 }

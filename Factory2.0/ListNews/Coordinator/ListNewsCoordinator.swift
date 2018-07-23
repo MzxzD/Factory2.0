@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-
-
 class ListNewsCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var presenter: UINavigationController
@@ -27,28 +25,22 @@ class ListNewsCoordinator: Coordinator {
     }
     
     func start() {
-        print("Coordinator is beaing used")
+  
         presenter.present(controller, animated: true)
     }
     
     deinit {
-        print("LstNewsCoorinatorDeinitialised!")
+ 
     }
     
-    
-    
 }
-extension ListNewsCoordinator: ListNewsCoordinatorDelegate {
-    
-    
-    
+extension ListNewsCoordinator: OpenSingleNewsDelegate {
+
     func openSingleNews(selectedNews: NewsData) {
-        print("openSingleNewsInitiated")
+
         let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
-        print(newsDetailCoordinator)
         newsDetailCoordinator.start()
         self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
-        print(self.childCoordinator)
         
     }
     

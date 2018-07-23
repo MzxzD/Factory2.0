@@ -1,5 +1,4 @@
 
-// MARK: Properties
 struct ArticleResponse: Decodable {
     let status: String
     let sortBy: String

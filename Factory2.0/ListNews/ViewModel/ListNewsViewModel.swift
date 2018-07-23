@@ -12,23 +12,22 @@ class ListNewsViewModel {
     var dataIsReady = PublishSubject<Bool>()
     var loaderControll = PublishSubject<Bool>()
     var errorOccured = PublishSubject<Bool>()
-    var listNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
+    var listNewsCoordinatorDelegate: OpenSingleNewsDelegate?
     var downloadTrigger = PublishSubject<Bool>()
     var realmServise = RealmSerivce()
+    
     init(newsService:APIRepository) {
         self.newsService = newsService
     }
     
     func initializeObservableDataAPI() -> Disposable{
-        print("InitializeObservableDataAPI called!")
-        
+  
         let combinedObservable = downloadTrigger.flatMap { [unowned self] (_) -> Observable<(DataAndErrorWrapper<NewsData>, DataAndErrorWrapper<NewsData>)> in
             self.loaderControll.onNext(true)
             let favoriteObserver = self.realmServise.getFavoriteData()
             let downloadObserver = self.newsService.fetchNewsFromAPI()
             
             let unwrappedDownloadObserver = downloadObserver.map({ (wrapperArticleData) -> DataAndErrorWrapper<NewsData> in
-                print("wrappedArticle into WrappedNews")
                 return DataAndErrorWrapper<NewsData>(data:wrapperArticleData.data.map({ (article) -> NewsData in
                     
                     return NewsData(value: ["title": article.title, "descriptionNews": article.description, "urlToImage": article.urlToImage])
@@ -50,7 +49,6 @@ class ListNewsViewModel {
                 return (wrappedDownloadedData, wrappedFavoriteData)
             })
             .subscribe(onNext: { (downloadedNews, favoriteNews) in
-                // ovako mogu:
                 if downloadedNews.errorMessage == nil && favoriteNews.errorMessage == nil {
                     
                     self.newsData = downloadedNews.data
@@ -60,13 +58,9 @@ class ListNewsViewModel {
                 } else {
                     
                     self.errorOccured.onNext(true)
-
                 }
-           
-      
             })
     }
-    
     
     func compareAPIWithRealm() {
         for apiData in newsData {
@@ -83,49 +77,46 @@ class ListNewsViewModel {
         }
         self.dataIsReady.onNext(true)
     }
-    // Setting Up timer for new data (treba refresh liste napraviti)
     func checkForNewData() {
-        print("ChechForNewData initialised!")
         let currentTime = Date()
         if (successDownloadTime == nil){
             self.downloadTrigger.onNext(true)
             successDownloadTime = currentTime
-            print("First time Download")
             return
         }
         let compareCurrentTimeAndTimeDataHasDownloaded =  successDownloadTime?.addingTimeInterval((5*60))
-        
-        
         if compareCurrentTimeAndTimeDataHasDownloaded! > currentTime  {
-            print("still")
             compareAPIWithRealm()
             return
         } else {
-            print("5minutes has passed, downloading anew.")
             self.downloadTrigger.onNext(true)
             successDownloadTime = currentTime
         }
     }
- 
     
     func newsSelected(selectedNews: Int) {
-        print("PushToDetail function initiated")
         self.listNewsCoordinatorDelegate?.openSingleNews(selectedNews: newsData[selectedNews])
     }
     
     func addOrRemoveDataFromDatabase(selectedNews: Int){
         let savingData = NewsData(value: newsData[selectedNews])
+        let errorObserver = realmServise.errorOccured
+        errorObserver.subscribeOn(ConcurrentDispatchQueueScheduler(qos:.background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [unowned self] (error) in
+                if error {
+                    self.errorOccured.onNext(true)
+                }
+            })
         if savingData.isItFavourite {
-            print("deleting")
             self.realmServise.delete(object: savingData)
-            newsData[selectedNews].isItFavourite = false
+            self.newsData[selectedNews].isItFavourite = false
         } else {
-            print("add to database")
             savingData.isItFavourite = true
             self.realmServise.create(object: savingData)
-            newsData[selectedNews].isItFavourite = true
+            self.newsData[selectedNews].isItFavourite = true
             
         }
-        self.dataIsReady.onNext(true)
+         self.dataIsReady.onNext(true)
     }
 }

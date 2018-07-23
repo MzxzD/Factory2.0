@@ -17,14 +17,13 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
     let cellIdentifier = "ListNewsViewCell"
     var favoriteListNewsViewModel: FavoritenewsViewModel!
     let disposebag = DisposeBag()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
         favoriteListNewsViewModel.getFavoriteNews().disposed(by: disposebag)
-         initializeRealmObservable()
+        initializeRealmObservable()
     }
-    
     
     override func viewDidAppear(_ animated: Bool) {
         starGettingDataFromRealm()
@@ -79,23 +78,16 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     func didPressButton(_ sender: ListNewsViewCell) {
         guard let tappedIndexPath = tableView.indexPath(for: sender) else { return }
-        print("tapped! index!")
-        print(tappedIndexPath)
-        
         favoriteListNewsViewModel.removeDataFromFavorite(selectedNews: tappedIndexPath.row)
-        tableView.reloadData()
     }
-    
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         favoriteListNewsViewModel.newsSelected(selectedNews: indexPath.row)
     }
-    
     
     func initializeRealmObservable() {
         let observer = favoriteListNewsViewModel.dataIsReady
@@ -110,6 +102,6 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
     }
     
     func starGettingDataFromRealm() {
-      favoriteListNewsViewModel.realmTrigger.onNext(true)
+        favoriteListNewsViewModel.realmTrigger.onNext(true)
     }
 }

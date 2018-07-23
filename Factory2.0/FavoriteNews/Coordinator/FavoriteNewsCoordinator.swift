@@ -14,7 +14,7 @@ class FavoriteNewsCoordinator: Coordinator {
     var presenter: UINavigationController
     let controller: FavoriteNewsViewController
     weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
-
+    
     init(presenter: UINavigationController) {
         self.presenter = presenter
         let favoriteNewsontroller = FavoriteNewsViewController()
@@ -27,26 +27,21 @@ class FavoriteNewsCoordinator: Coordinator {
     func start() {
         presenter.present(controller, animated: true)
     }
-
+    
 }
 
-extension FavoriteNewsCoordinator: ListNewsCoordinatorDelegate {
-
+extension FavoriteNewsCoordinator: OpenSingleNewsDelegate {
+    
     func openSingleNews(selectedNews: NewsData) {
-        print("openSingleNewsInitiated")
         let newsDetailCoordinator = SingleNewsCoordinator(presenter: self.presenter, news: selectedNews)
-        print(newsDetailCoordinator)
         newsDetailCoordinator.start()
         self.addChildCoordinator(childCoordinator: newsDetailCoordinator)
-        print(self.childCoordinator)
     }
-
+    
     func viewControllerHasFinished() {
         self.childCoordinator.removeAll()
         parentCoordinatorDelegate?.childHasFinished(coordinator: self)
     }
-
-
 }
 
 extension FavoriteNewsCoordinator: ParentCoordinatorDelegate{

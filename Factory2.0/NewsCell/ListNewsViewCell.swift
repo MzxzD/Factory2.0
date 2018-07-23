@@ -9,10 +9,6 @@
 import UIKit
 
 class ListNewsViewCell: UITableViewCell {
-
-
-    // MARK: Properties
-
     var titleText: String?
     var newsImage: String?
     weak var cellDelegate: NewsViewCellDelegate?
@@ -38,20 +34,15 @@ class ListNewsViewCell: UITableViewCell {
         button.setBackgroundImage(#imageLiteral(resourceName: "star_black"), for: .normal)
         button.setBackgroundImage(#imageLiteral(resourceName: "favorite"), for: .selected )
         button.translatesAutoresizingMaskIntoConstraints = false
-       
-
         return button
     }()
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 
@@ -67,13 +58,11 @@ class ListNewsViewCell: UITableViewCell {
         newsImageView.widthAnchor.constraint(equalToConstant: 90).isActive = true
         newsImageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
 
-
         favoriteButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         favoriteButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         favoriteButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15).isActive = true
         favoriteButton.centerYAnchor.constraint(equalTo: newsImageView.centerYAnchor).isActive = true
         
-
         newsTitleLabel.leftAnchor.constraint(equalTo: newsImageView.rightAnchor, constant: 8).isActive = true
         newsTitleLabel.rightAnchor.constraint(equalTo: favoriteButton.leftAnchor).isActive = true
         newsTitleLabel.centerYAnchor.constraint(equalTo: newsImageView.centerYAnchor).isActive = true

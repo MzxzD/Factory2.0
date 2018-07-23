@@ -5,11 +5,8 @@
 //  Created by Mateo Došlić on 11/07/2018.
 //  Copyright © 2018 Mateo Došlić. All rights reserved.
 //
-
 import Foundation
 import UIKit
-
-
 
 class BaseCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
@@ -24,7 +21,6 @@ class BaseCoordinator: Coordinator {
         
         let favoriteNewsCoordinator = FavoriteNewsCoordinator(presenter: presenter)
         let favouriteNewsNavigationController = createNavigationController(viewController: favoriteNewsCoordinator.controller, name: "FAVOURITE LIST", unselectedImage: "star_black", selectedImage: "star_white")
-     //   presenter.navigationItem.title = favouriteNewsNavigationController.tabBarItem.title
         
         let listNewsCoordinator = ListNewsCoordinator(presenter: presenter)
         let listNewsNavigationController = createNavigationController(viewController: listNewsCoordinator.controller, name: "LIST NEWS", unselectedImage: "list_news", selectedImage: "list_news")
@@ -34,12 +30,10 @@ class BaseCoordinator: Coordinator {
     }
     
     func start() {
-        print("Coordinator is beaing used")
         presenter.pushViewController(controller, animated: true)
     }
     
     deinit {
-        print("LstNewsCoorinatorDeinitialised!")
     }
     
     func createNavigationController(viewController: UIViewController ,name: String, unselectedImage: String, selectedImage: String ) -> UINavigationController{

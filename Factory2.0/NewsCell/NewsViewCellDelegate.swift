@@ -11,5 +11,4 @@ import UIKit
 
 protocol NewsViewCellDelegate: class {
     func didPressButton(_ sender: ListNewsViewCell)
-    
 }

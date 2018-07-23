@@ -17,6 +17,5 @@ class BaseViewController: UITabBarController {
         tabBar.barTintColor = UIColor.white
         navigationItem.title = "Factory"
     }
-
 }
 

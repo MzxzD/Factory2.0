@@ -29,7 +29,7 @@
 		CFD8C02520F3851F00063F49 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02420F3851F00063F49 /* AppCoordinator.swift */; };
 		CFD8C02720F3852B00063F49 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02620F3852B00063F49 /* Coordinator.swift */; };
 		CFD8C02A20F3965400063F49 /* ListNewsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02920F3965400063F49 /* ListNewsCoordinator.swift */; };
-		CFD8C02D20F3A59B00063F49 /* ListNewsCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02C20F3A59B00063F49 /* ListNewsCoordinatorDelegate.swift */; };
+		CFD8C02D20F3A59B00063F49 /* OpenSingleNewsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02C20F3A59B00063F49 /* OpenSingleNewsDelegate.swift */; };
 		CFD8C02F20F3A75F00063F49 /* CoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD8C02E20F3A75F00063F49 /* CoordinatorDelegate.swift */; };
 		CFE0426C20F750F60042CB2F /* FavoriteNewsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE0426B20F750F60042CB2F /* FavoriteNewsCoordinator.swift */; };
 		CFE0427020F7800B0042CB2F /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE0426F20F7800B0042CB2F /* RealmService.swift */; };
@@ -64,7 +64,7 @@
 		CFD8C02420F3851F00063F49 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		CFD8C02620F3852B00063F49 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		CFD8C02920F3965400063F49 /* ListNewsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNewsCoordinator.swift; sourceTree = "<group>"; };
-		CFD8C02C20F3A59B00063F49 /* ListNewsCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNewsCoordinatorDelegate.swift; sourceTree = "<group>"; };
+		CFD8C02C20F3A59B00063F49 /* OpenSingleNewsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSingleNewsDelegate.swift; sourceTree = "<group>"; };
 		CFD8C02E20F3A75F00063F49 /* CoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorDelegate.swift; sourceTree = "<group>"; };
 		CFE0426B20F750F60042CB2F /* FavoriteNewsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNewsCoordinator.swift; sourceTree = "<group>"; };
 		CFE0426F20F7800B0042CB2F /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
@@ -195,7 +195,6 @@
 			children = (
 				CFC6577120F61D0C00AA7AE1 /* Coordinator */,
 				CFC6577220F61D1500AA7AE1 /* View */,
-				CFC6577320F61D2D00AA7AE1 /* ViewModel */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -214,13 +213,6 @@
 				CFC6576F20F61CA200AA7AE1 /* BaseViewController.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		CFC6577320F61D2D00AA7AE1 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		CFC6577420F61D5700AA7AE1 /* FavoriteNews */ = {
@@ -309,6 +301,7 @@
 				CFD8C02420F3851F00063F49 /* AppCoordinator.swift */,
 				CFD8C02620F3852B00063F49 /* Coordinator.swift */,
 				CFD8C02E20F3A75F00063F49 /* CoordinatorDelegate.swift */,
+				CFD8C02C20F3A59B00063F49 /* OpenSingleNewsDelegate.swift */,
 			);
 			name = Coordinators;
 			path = "New Group";
@@ -318,7 +311,6 @@
 			isa = PBXGroup;
 			children = (
 				CFD8C02920F3965400063F49 /* ListNewsCoordinator.swift */,
-				CFD8C02C20F3A59B00063F49 /* ListNewsCoordinatorDelegate.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -465,7 +457,7 @@
 				CFE0427020F7800B0042CB2F /* RealmService.swift in Sources */,
 				CF03CAD120E90C3200D7FCCF /* SingleNewsViewModel.swift in Sources */,
 				CFC6577020F61CA200AA7AE1 /* BaseViewController.swift in Sources */,
-				CFD8C02D20F3A59B00063F49 /* ListNewsCoordinatorDelegate.swift in Sources */,
+				CFD8C02D20F3A59B00063F49 /* OpenSingleNewsDelegate.swift in Sources */,
 				CF137A2B20E8076A002A45A6 /* ListNewsViewModel.swift in Sources */,
 				CF137A3020E8076A002A45A6 /* ListNewsViewController.swift in Sources */,
 				CF137A2E20E8076A002A45A6 /* ListNewsViewCell.swift in Sources */,

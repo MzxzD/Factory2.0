@@ -12,26 +12,29 @@ import RealmSwift
 import RxSwift
 
 class RealmSerivce {
-    
     var realm = try! Realm()
+    let errorOccured = PublishSubject<Bool>()
     
     func create<T : NewsData>(object: T) {
-        try! realm.write {
-            realm.add(object)
-            
-            
+        do{
+            try realm.write {
+                realm.add(object)
+            }
+        }catch _ {
+            self.errorOccured.onNext(true)
         }
     }
     
     func delete<T: NewsData>(object: T){
-        
-        try! realm.write {
-           
-            realm.delete(realm.objects(NewsData.self).filter("title=%@", object.title!))
-   
+        do {
+            try realm.write {
+                realm.delete(realm.objects(NewsData.self).filter("title=%@", object.title!))
+            }
+            
+        } catch _ {
+            self.errorOccured.onNext(true)
         }
     }
-
 
     func getFavoriteData() -> (Observable<DataAndErrorWrapper<NewsData>>){
         var favoriteNewsData: [NewsData] = []

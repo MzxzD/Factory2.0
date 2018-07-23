@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ListNewsCoordinatorDelegate: CoordinatorDelegate {
+protocol OpenSingleNewsDelegate: CoordinatorDelegate {
     func openSingleNews(selectedNews: NewsData)
 }

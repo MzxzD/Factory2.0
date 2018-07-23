@@ -15,9 +15,6 @@ class SingleNewsCoordinator: Coordinator {
     private let singleNewsController: SingleNewsViewController
     weak var parentCoordinatorDelegate: ParentCoordinatorDelegate?
     let favoriteButtonAppearence = UIBarButtonItem.appearance()
-
-    
-    
     
     init(presenter: UINavigationController, news: NewsData) {
         self.presenter = presenter
@@ -26,41 +23,30 @@ class SingleNewsCoordinator: Coordinator {
         singleNewsController.singleNewsViewModel = singleNewsViewModel
         self.singleNewsController = singleNewsController
         singleNewsViewModel.newsData = news
-        
-        
-
-        
     }
     
-    
     func start() {
-        print("StartToSingleNews")
         presenter.pushViewController(singleNewsController, animated: true)
     }
     
-   @objc func favButtonTapped(){
-        print("Tapped!")
+    @objc func favButtonTapped(){
     }
     
     deinit {
-        print("SingleNewsCoorinatorDeinitialised!")
     }
 }
 
-extension SingleNewsCoordinator: ListNewsCoordinatorDelegate{
+extension SingleNewsCoordinator: OpenSingleNewsDelegate{
     func openSingleNews(selectedNews: NewsData) {
         
     }
     
     func viewControllerHasFinished() {
-        print("ViewControllerHasFinished")
         childCoordinator.removeAll()
         parentCoordinatorDelegate?.childHasFinished(coordinator: self)
     }
     
-    
 }
-
 
 extension SingleNewsCoordinator: ParentCoordinatorDelegate {
     func childHasFinished(coordinator: Coordinator) {

@@ -11,7 +11,7 @@ import Foundation
 
 class SingleNewsViewModel {
     
-    weak var listNewsCoordinatorDelegate: ListNewsCoordinatorDelegate?
+    weak var listNewsCoordinatorDelegate: OpenSingleNewsDelegate?
     var newsData: NewsData!
     let realmService = RealmSerivce()
     
@@ -26,7 +26,6 @@ class SingleNewsViewModel {
             self.realmService.create(object: newData)
             newsData.isItFavourite = true
         }
-        print(newsData.isItFavourite)
         return newsData.isItFavourite
     }
     
