@@ -16,13 +16,14 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
     
     let cellIdentifier = "ListNewsViewCell"
     var favoriteListNewsViewModel: FavoritenewsViewModel!
-    let disposebag = DisposeBag()
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ListNewsViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        favoriteListNewsViewModel.getFavoriteNews().disposed(by: disposebag)
+        favoriteListNewsViewModel.getFavoriteNews().disposed(by: disposeBag)
         initializeRealmObservable()
+        initializeError()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,10 +99,24 @@ class FavoriteNewsViewController: UITableViewController, NewsViewCellDelegate {
                 if event {
                     self.tableView.reloadData()
                 }
-            }).disposed(by: disposebag)
+            }).disposed(by: disposeBag)
     }
     
     func starGettingDataFromRealm() {
         favoriteListNewsViewModel.realmTrigger.onNext(true)
+    }
+    
+    func initializeError() {
+        let errorObserver = self.favoriteListNewsViewModel.errorOccurd
+        errorObserver
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (event) in
+                if event {
+                    errorOccured(value: "Failed to delete news or it was allrealy deleted!")
+                } else {
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }

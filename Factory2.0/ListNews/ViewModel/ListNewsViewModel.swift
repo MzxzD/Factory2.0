@@ -21,7 +21,7 @@ class ListNewsViewModel {
     }
     
     func initializeObservableDataAPI() -> Disposable{
-  
+        
         let combinedObservable = downloadTrigger.flatMap { [unowned self] (_) -> Observable<(DataAndErrorWrapper<NewsData>, DataAndErrorWrapper<NewsData>)> in
             self.loaderControll.onNext(true)
             let favoriteObserver = self.realmServise.getFavoriteData()
@@ -38,7 +38,7 @@ class ListNewsViewModel {
         }
         return combinedObservable.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
             .observeOn(MainScheduler.instance)
-            .map({ (wrappedDownloadedData, wrappedFavoriteData) -> (DataAndErrorWrapper<NewsData>, DataAndErrorWrapper<NewsData>) in
+            .map({ (wrappedDownloadedData, wrappedFavoriteData) -> (DataAndErrorWrapper<NewsData>) in
                 for (localData) in wrappedFavoriteData.data{
                     for(apiData) in wrappedDownloadedData.data {
                         if localData.title == apiData.title {
@@ -46,10 +46,10 @@ class ListNewsViewModel {
                         }
                     }
                 }
-                return (wrappedDownloadedData, wrappedFavoriteData)
+                return (wrappedDownloadedData)
             })
-            .subscribe(onNext: { (downloadedNews, favoriteNews) in
-                if downloadedNews.errorMessage == nil && favoriteNews.errorMessage == nil {
+            .subscribe(onNext: { (downloadedNews) in
+                if downloadedNews.errorMessage == nil {
                     
                     self.newsData = downloadedNews.data
                     self.dataIsReady.onNext(true)
@@ -100,23 +100,21 @@ class ListNewsViewModel {
     
     func addOrRemoveDataFromDatabase(selectedNews: Int){
         let savingData = NewsData(value: newsData[selectedNews])
-        let errorObserver = realmServise.errorOccured
-        errorObserver.subscribeOn(ConcurrentDispatchQueueScheduler(qos:.background))
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [unowned self] (error) in
-                if error {
-                    self.errorOccured.onNext(true)
-                }
-            })
         if savingData.isItFavourite {
-            self.realmServise.delete(object: savingData)
-            self.newsData[selectedNews].isItFavourite = false
+            if (self.realmServise.delete(object: savingData)){
+                self.newsData[selectedNews].isItFavourite = false
+            } else {
+                errorOccured.onNext(true)
+            }
+            
         } else {
             savingData.isItFavourite = true
-            self.realmServise.create(object: savingData)
-            self.newsData[selectedNews].isItFavourite = true
-            
+            if ( self.realmServise.create(object: savingData) ) {
+                self.newsData[selectedNews].isItFavourite = true
+            } else {
+                errorOccured.onNext(true)
+            }
         }
-         self.dataIsReady.onNext(true)
+        self.dataIsReady.onNext(true)
     }
 }

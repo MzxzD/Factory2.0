@@ -12,10 +12,10 @@ import RxSwift
 class FavoritenewsViewModel {
     var favoriteNewsData: [NewsData] = []
     var realmServise = RealmSerivce()
-    var favoriteNews: Results<NewsData>!
     var favoriteistNewsCoordinatorDelegate: OpenSingleNewsDelegate?
     var dataIsReady = PublishSubject<Bool>()
     var realmTrigger = PublishSubject<Bool>()
+    var errorOccurd = PublishSubject<Bool>()
     
     func getFavoriteNews() -> Disposable {
         let realmObaerverTrigger = realmTrigger
@@ -24,10 +24,10 @@ class FavoritenewsViewModel {
             .subscribe(onNext: { [unowned self] (event) in
                 if event {
                     self.favoriteNewsData.removeAll()
-                    self.favoriteNews = self.realmServise.realm.objects(NewsData.self)
-                    for element in self.favoriteNews {
+                    let favoriteNews = self.realmServise.realm.objects(NewsData.self)
+                    for element in favoriteNews {
                         if element.isItFavourite == true{
-                            self.favoriteNewsData += [element]
+                            self.favoriteNewsData += [NewsData(value: ["title": element.title!, "descriptionNews": element.description, "urlToImage": element.urlToImage!, "isItFavourite": element.isItFavourite])]
                         }
                     }
                     self.dataIsReady.onNext(true)
@@ -42,10 +42,14 @@ class FavoritenewsViewModel {
     }
     
     func removeDataFromFavorite(selectedNews: Int){
-        let savingData = NewsData(value: favoriteNewsData[selectedNews])
-        self.realmServise.delete(object: savingData)
-        self.favoriteNewsData.remove(at: selectedNews)
-        self.dataIsReady.onNext(true)
+        let savingData = favoriteNewsData[selectedNews]
+        if ( self.realmServise.delete(object: savingData) ) {
+            self.favoriteNewsData.remove(at: selectedNews)
+            self.dataIsReady.onNext(true)
+        } else {
+            errorOccurd.onNext(true)
+        }
+        
     }
     
 }

@@ -9,9 +9,11 @@
 import UIKit
 import Alamofire
 import AlamofireImage
+import RxSwift
 
 class SingleNewsViewController: UIViewController  {
     var singleNewsViewModel: SingleNewsViewModel!
+    var disposeBag = DisposeBag()
     
     var scrollContentView: UIScrollView = {
         let scroll = UIScrollView()
@@ -56,6 +58,7 @@ class SingleNewsViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubViews()
+        initializeError()
         view.backgroundColor = UIColor.white
     }
     override func viewDidDisappear(_ animated: Bool) {
@@ -113,6 +116,20 @@ class SingleNewsViewController: UIViewController  {
     
     @objc func buttonPressed() {
         favoriteButton.isSelected =  singleNewsViewModel.addOrRemoveFromDataBase()
+    }
+    
+    func initializeError() {
+        let errorObserver = self.singleNewsViewModel.errorOccured
+        errorObserver
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (event) in
+                if event {
+                    errorOccured(value: "")
+                } else {
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     deinit {

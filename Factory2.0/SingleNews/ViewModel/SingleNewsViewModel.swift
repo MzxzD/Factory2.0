@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 
 class SingleNewsViewModel {
@@ -14,17 +15,26 @@ class SingleNewsViewModel {
     weak var listNewsCoordinatorDelegate: OpenSingleNewsDelegate?
     var newsData: NewsData!
     let realmService = RealmSerivce()
+    var errorOccured = PublishSubject<Bool>()
     
     func addOrRemoveFromDataBase() -> Bool {
         let newData = NewsData(value: newsData)
         
         if (newData.isItFavourite == true ){
-            self.realmService.delete(object: newData)
-            newsData.isItFavourite = false
+            if (self.realmService.delete(object: newData)) {
+                newsData.isItFavourite = false
+            }else {
+                errorOccured.onNext(true)
+            }
+            
         } else {
             newData.isItFavourite = true
-            self.realmService.create(object: newData)
-            newsData.isItFavourite = true
+            if ( self.realmService.create(object: newData)) {
+                newsData.isItFavourite = true
+            }else {
+                errorOccured.onNext(true)
+            }
+            
         }
         return newsData.isItFavourite
     }

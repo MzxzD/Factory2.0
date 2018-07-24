@@ -15,25 +15,27 @@ class RealmSerivce {
     var realm = try! Realm()
     let errorOccured = PublishSubject<Bool>()
     
-    func create<T : NewsData>(object: T) {
+    func create<T : NewsData>(object: T) -> Bool {
         do{
             try realm.write {
                 realm.add(object)
             }
-        }catch _ {
-            self.errorOccured.onNext(true)
+        }catch {
+            return false
         }
+        return true
     }
     
-    func delete<T: NewsData>(object: T){
+    func delete<T: NewsData>(object: T) -> Bool{
         do {
             try realm.write {
-                realm.delete(realm.objects(NewsData.self).filter("title=%@", object.title!))
+                    realm.delete(realm.objects(NewsData.self).filter("title=%@", object.title!))
             }
             
-        } catch _ {
-            self.errorOccured.onNext(true)
+        } catch {
+            return false
         }
+       return true
     }
 
     func getFavoriteData() -> (Observable<DataAndErrorWrapper<NewsData>>){
